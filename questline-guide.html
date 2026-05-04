@@ -2934,10 +2934,21 @@
         <span class="section-label">02 — Anatomy</span>
         <h2><span class="h-num">02</span>The seven components, at a glance</h2>
         <p class="intro">
-          Click any card to deep-dive into that component. The first six live inside a single
-          <code>components</code> frame as Component Sets with State variants. The seventh is
-          the assembled mockup full of instances.
+          Click any card to deep-dive. The first six live inside a single <code>components</code>
+          frame as Component Sets with State variants. The seventh is the assembled mockup,
+          full of instances.
         </p>
+
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li>Seven Component Sets total: <code>background</code>, <code>header</code>, <code>rewards</code>, <code>quests</code>, <code>button</code>, <code>timer</code>, <code>wheel</code>.</li>
+            <li>The <strong>Mockup</strong> stands apart — it's the assembled view holding instances of all seven.</li>
+            <li><strong>Edit only the source Component</strong> — never edit anything in the mockup directly. Changes propagate to all instances.</li>
+            <li><strong>Description text is NOT a separate component</strong> — it lives inside <code>background</code>.</li>
+            <li><strong>Button + timer are brand-fixed.</strong> They come from the brand UIKit (McLuck / HM / PF / SB) and are never theme-customised.</li>
+          </ul>
+        </div>
 
         <div class="comp-overview">
           <a class="comp-card" href="#background">
@@ -2991,63 +3002,70 @@
           </a>
         </div>
 
-        <div class="callout callout-info">
-          <p><strong>Components vs Mockup.</strong> All <strong>seven</strong> components — background, header, rewards, quests, button, timer, wheel — live as <strong>Main Components</strong> inside the <code>components</code> frame. The <strong>Mockup</strong> (e.g. <code>Questline: ML SuperBowl</code>) stands apart from those seven — it's the assembled view full of <strong>Child Components</strong> (instances of the mains). The mockup is itself a Component too, so you can drag instances of it into Mobile / Desktop preview frames for visual QA. <strong>Any change to a Main Component reflects immediately in every instance</strong> — that's the whole reason for working in components.</p>
+        <details class="deep">
+          <summary>Components vs Mockup — what's the difference <span class="deep-tag">basics</span></summary>
+          <div class="deep-body">
+            <p>All <strong>seven</strong> components live as <strong>Main Components</strong> inside the <code>components</code> frame. The <strong>Mockup</strong> (e.g. <code>Questline: ML SuperBowl</code>) stands apart — it's the assembled view holding <strong>Child Components</strong> (instances of the mains). The mockup is itself a Component too, so you can drag instances of it into Mobile / Desktop preview frames for visual QA. <strong>Any change to a Main Component reflects immediately in every instance</strong> — that's the whole reason for working in components.</p>
+          </div>
+        </details>
 
-          <p style="margin-top: 14px;"><strong>Final Design rules (the assembled mockup):</strong></p>
-          <ul>
-            <li><strong>Layout</strong> — header on top, rewards just below. <strong>Timer is flexible</strong>: place it in the upper part right under rewards, OR in the lower part just above the button — depends on the design and the space available. <strong>Button is always at the bottom.</strong></li>
-            <li><strong>Structure must be clean</strong> — every component sits as its own separate top-level layer in the mockup frame (header / rewards / timer / button / quest1 / quest2 / … / background). No nesting, no groups around them.</li>
-            <li><strong>Items (quests) are named exactly</strong> <code>quest1</code>, <code>quest2</code>, <code>quest3</code>, … in the layer panel — these names are what the plugin reads.</li>
-            <li><strong>Never edit anything in the mockup directly</strong> — no resize, no recolour, no text edit. All changes go into the source Component in the <code>components</code> frame and propagate down. (See <a href="#mistakes" style="color: var(--text);">Mistakes</a> for what breaks if you don't.)</li>
-          </ul>
-        </div>
-        <div class="callout callout-correction">
-          <p><strong>Correction on the in-Figma guide:</strong> the <em>Description</em> shown there is <strong>not a separate component</strong> — it lives inside the <code>background</code> component. Don't try to ship it as its own layer/component, it'll fail validation.</p>
-        </div>
-
-        <h3 style="margin-top: 36px;">Composition rules — how the pieces sit together</h3>
-        <p>Conventions on how the popup actually looks when assembled. These are the team's design defaults — adjust per theme, but start from here.</p>
-
-        <div class="two-col">
-          <div>
-            <h4>Vertical stack, top to bottom</h4>
+        <details class="deep">
+          <summary>Final Design rules — the assembled mockup <span class="deep-tag">must follow</span></summary>
+          <div class="deep-body">
             <ul>
-              <li><strong>Header sits at the top</strong> — and <strong>can stick out beyond the background</strong>. The themed logo / mascot in the header is allowed (often expected) to overflow above the background canvas. This is how it gets visual punch.</li>
-              <li><strong>Rewards sits right below the header</strong> — often <strong>partially overlapping the header from below</strong>. Tight stacking, not loose.</li>
-              <li><strong>Quests fill the centre of the background</strong> — this is the visual focal point of the whole popup. Make them as visible as possible in the centre. Everything else exists to frame the quests.</li>
-              <li><strong>Description (if used) floats either right under rewards or near the bottom of the background</strong> — wherever it doesn't fight the quests for attention. Stay out of the way, stay legible.</li>
-              <li><strong>Timer is flexible</strong> — top (under rewards) or bottom (above button). Pick what the layout breathes for.</li>
-              <li><strong>Button is always at the very bottom.</strong> No exceptions.</li>
+              <li><strong>Layout</strong> — header on top, rewards just below. <strong>Timer is flexible</strong>: place it in the upper part right under rewards, OR in the lower part just above the button — depends on the design and the space available. <strong>Button is always at the bottom.</strong></li>
+              <li><strong>Structure must be clean</strong> — every component sits as its own separate top-level layer in the mockup frame (header / rewards / timer / button / quest1 / quest2 / … / background). No nesting, no groups around them.</li>
+              <li><strong>Items (quests) are named exactly</strong> <code>quest1</code>, <code>quest2</code>, <code>quest3</code>, … in the layer panel — these names are what the plugin reads.</li>
+              <li><strong>Never edit anything in the mockup directly</strong> — no resize, no recolour, no text edit. All changes go into the source Component in the <code>components</code> frame and propagate down. (See <a href="#mistakes" style="color: var(--text);">Common mistakes</a> for what breaks if you don't.)</li>
+            </ul>
+            <p style="margin-top: 12px; font-size: 13px;"><em>Correction on the in-Figma guide:</em> the <strong>Description</strong> shown there is <strong>not a separate component</strong> — it lives inside <code>background</code>. Don't ship it as its own layer/component, it'll fail validation.</p>
+          </div>
+        </details>
+
+        <details class="deep">
+          <summary>Composition rules — how the pieces sit together <span class="deep-tag">design defaults</span></summary>
+          <div class="deep-body">
+            <p>Conventions on how the popup actually looks when assembled. Adjust per theme, but start from here.</p>
+            <div class="two-col">
+              <div>
+                <h4>Vertical stack, top to bottom</h4>
+                <ul>
+                  <li><strong>Header sits at the top</strong> — and <strong>can stick out beyond the background</strong>. The themed logo / mascot in the header is allowed (often expected) to overflow above the background canvas. This is how it gets visual punch.</li>
+                  <li><strong>Rewards sits right below the header</strong> — often <strong>partially overlapping the header from below</strong>. Tight stacking, not loose.</li>
+                  <li><strong>Quests fill the centre of the background</strong> — this is the visual focal point of the whole popup. Make them as visible as possible in the centre. Everything else exists to frame the quests.</li>
+                  <li><strong>Description (if used) floats either right under rewards or near the bottom of the background</strong> — wherever it doesn't fight the quests for attention. Stay out of the way, stay legible.</li>
+                  <li><strong>Timer is flexible</strong> — top (under rewards) or bottom (above button). Pick what the layout breathes for.</li>
+                  <li><strong>Button is always at the very bottom.</strong> No exceptions.</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Width &amp; alignment</h4>
+                <ul>
+                  <li><strong>Header and rewards span almost the full width of the background</strong> — as wide as possible, but never wider than the background. Edges should breathe by a few pixels.</li>
+                  <li><strong>Everything is centre-aligned.</strong> Header, rewards, timer, description, button — all on the horizontal centre line. <em>No left-align, no right-align.</em></li>
+                  <li><strong>Quest icons can overlap.</strong> Slight or even 100 % overlap is fine if the composition calls for it (some themes have quests stacked / clustered tightly). Numbering still goes <code>quest1…quest5</code> regardless of layout.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="deep">
+          <summary>Per-state visual approach <span class="deep-tag">team convention</span></summary>
+          <div class="deep-body">
+            <ul>
+              <li><strong>Header.</strong> <code>active</code> = clean themed header. <code>success</code> = same header + a small amount of confetti. <code>fail</code> = the header desaturated to greyscale.</li>
+              <li><strong>Rewards.</strong> <code>active</code> and <code>unclaimed</code> are <strong>visually identical</strong> (same artwork, same prizes shown). <code>claimed</code> is the same plate with the text <em>"Rewards claimed"</em> + confetti — and that confetti should match the confetti used in <code>header / success</code>. <code>fail</code> is the same plate with just the text <em>"Time's up"</em>. <strong>All four states must be the same physical size.</strong></li>
+              <li><strong>Quests.</strong> Two common visual approaches: (1) <em>checkmark style</em> — colour icon with a green tick badge once collected. (2) <em>monochrome → colour</em> — greyscale until collected, full colour when done.</li>
             </ul>
           </div>
-          <div>
-            <h4>Width &amp; alignment</h4>
-            <ul>
-              <li><strong>Header and rewards span almost the full width of the background</strong> — as wide as possible, but never wider than the background. Edges should breathe by a few pixels.</li>
-              <li><strong>Everything is centre-aligned.</strong> Header, rewards, timer, description, button — all on the horizontal centre line. <em>No left-align, no right-align.</em></li>
-              <li><strong>Quest icons can overlap.</strong> Slight or even 100 % overlap is fine if the composition calls for it (some themes have quests stacked / clustered tightly). Numbering still goes <code>quest1…quest5</code> regardless of layout.</li>
-            </ul>
-          </div>
-        </div>
+        </details>
 
-        <div class="callout callout-info">
-          <p><strong>Per-state visual approach (team convention):</strong></p>
-          <ul style="margin-top: 8px;">
-            <li><strong>Header.</strong> <code>active</code> = clean themed header. <code>success</code> = same header + a small amount of confetti. <code>fail</code> = the header desaturated to greyscale.</li>
-            <li><strong>Rewards.</strong> <code>active</code> and <code>unclaimed</code> are <strong>visually identical</strong> (same artwork, same prizes shown). <code>claimed</code> is the same plate with the text <em>"Rewards claimed"</em> + confetti — and that confetti should match the confetti used in <code>header / success</code>. <code>fail</code> is the same plate with just the text <em>"Time's up"</em>. <strong>All four states must be the same physical size.</strong></li>
-            <li><strong>Quests.</strong> Two common visual approaches: (1) <em>checkmark style</em> — colour icon with a green tick badge once collected. (2) <em>monochrome → colour</em> — greyscale until collected, full colour when done.</li>
-          </ul>
-        </div>
-
-        <div class="callout callout-tip">
-          <p><strong>Button and timer are brand-fixed.</strong> They come from one of the four brand UIKits (McLuck / Hello Millions / Playfame / Spin Blitz) and are <strong>never customised per theme</strong>. Copy as-is from the previous theme of the same brand, place, don't touch.</p>
-        </div>
-
-        <h3 style="margin-top: 40px;">Real layouts — four shipped questlines side by side</h3>
-        <p>The composition rules above are conventions, not a rigid template. Here's how the same set of components has been arranged across four real shipped themes — same components, very different layouts.</p>
-
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin: 22px 0;">
+        <details class="deep">
+          <summary>Real layouts — four shipped questlines side by side <span class="deep-tag">examples</span></summary>
+          <div class="deep-body">
+            <p>The composition rules above are conventions, not a rigid template. Here's the same set of components arranged across four real shipped themes — same components, very different layouts.</p>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin: 22px 0;">
 
           <figure style="margin: 0; background: var(--bg-1); border: 1px solid var(--border-soft); border-radius: var(--radius-lg); padding: 14px; display: flex; flex-direction: column;">
             <img decoding="async" loading="lazy" src="assets/figma/Questline - (Collectibles) - Mission To Grill.png" alt="Mission To Grill layout" style="width: 100%; height: auto; display: block; border-radius: 8px; border: 1px solid var(--border-soft);">
@@ -3087,8 +3105,15 @@
 
         </div>
 
-        <div class="callout callout-info">
-          <p><strong>Same components, different compositions.</strong> Notice that across all four: header is on top (often overflowing the bg), rewards is right under it, quests fill the centre as the focal point, button is at the very bottom. Everything else — overlap density, quest count, description position, timer placement — varies per theme. That's the latitude you have. Stay inside the rules above; play freely within them.</p>
+            <p style="margin-top: 4px; font-size: 13px; color: var(--text-3);"><em>Across all four: header is on top (often overflowing the bg), rewards is right under it, quests fill the centre as the focal point, button is at the very bottom. Overlap density, quest count, description position, timer placement — all vary per theme.</em></p>
+          </div>
+        </details>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#component-sets" data-page="anatomy">03 Component Sets</a>
+          <a href="#naming" data-page="rules">17 Layer naming</a>
+          <a href="#mistakes" data-page="rules">21 Common mistakes</a>
         </div>
       </section>
 
@@ -3099,48 +3124,72 @@
         <p class="intro">
           Every required piece in the guide must be wrapped in a <strong>Component Set</strong> —
           the dashed-purple rectangle Figma draws around a Component with variants. Even the
-          single-state pieces (<code>background</code>, <code>timer</code>) need it.
+          single-state pieces.
         </p>
 
-        <figure style="margin: 18px 0 28px;">
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li>All seven components live in Component Sets — including <code>background</code>, <code>timer</code> with single states.</li>
+            <li>Plugin reads variants by <code>State=…</code> property values.</li>
+            <li><strong>Quick visual test:</strong> dashed-purple rectangle = Component Set. Solid-purple-only = plain Component (needs to be wrapped).</li>
+            <li>If you change a variant's size, <strong>repack the Set</strong>: select it → <span class="kbd">⌘ ⌥ ⇧ R</span>. Otherwise plugin reads stale dimensions.</li>
+            <li>Wrap the assembled <strong>mockup itself</strong> as a Component too — so all four preview frames update from one source.</li>
+          </ul>
+        </div>
+
+        <figure style="margin: 18px 0 22px;">
           <img decoding="async" loading="lazy" src="assets/figma/component-sets-example.png" alt="Component Sets example from the For The Win Figma file" style="width: 100%; max-width: 1100px; height: auto; display: block; border: 1px solid var(--border); border-radius: 10px;">
-          <figcaption style="font-size: 12.5px; color: var(--text-3); margin-top: 10px;">Component Sets in the actual For The Win file — each dashed-purple rectangle (background, header, rewards, quests, button, timer, wheel) is a Component Set holding its variants.</figcaption>
+          <figcaption style="font-size: 12.5px; color: var(--text-3); margin-top: 10px;">Component Sets in the For The Win file — each dashed-purple rectangle is a Component Set holding its variants.</figcaption>
         </figure>
 
-        <div class="two-col">
-          <div>
-            <h3>What is a Component Set?</h3>
-            <p>It's a Figma container that holds one or more variants of a Component, exposed as a single layer with a <code>State=…</code> property. The plugin reads the variants by their <code>State</code> values: <code>State=active</code>, <code>State=success</code>, etc.</p>
-
-            <h4>How to create one</h4>
+        <details class="deep">
+          <summary>How to create a Component Set <span class="deep-tag">how-to · 30 sec</span></summary>
+          <div class="deep-body">
             <ol>
               <li>Select your Component (the purple-diamond layer).</li>
               <li>Top-right of the Properties panel, click the small <strong>rhombus icon</strong> labelled <em>Add Variant</em>. Figma wraps it in a dashed rectangle and adds a second variant.</li>
               <li>Rename each variant <code>State=active</code>, <code>State=success</code>, etc.</li>
               <li>For single-state components (<code>background</code>, <code>timer</code>), keep just one variant — but leave the dashed Set wrapper.</li>
             </ol>
+          </div>
+        </details>
 
-            <h4>Repacking the Set</h4>
+        <details class="deep">
+          <summary>Why every primitive needs a Set (even single-state ones) <span class="deep-tag">rationale</span></summary>
+          <div class="deep-body">
+            <p>Even <code>background</code> and <code>timer</code> have only one variant — but they still need to live in a Component Set wrapper.</p>
+            <p><strong>Why bother?</strong> When you copy-paste between project files, only Component Sets keep the parent reference. Plain Components turn into orphaned instances on the receiving side, and the next designer has to manually relink every one. Component Sets travel cleanly.</p>
+          </div>
+        </details>
+
+        <details class="deep">
+          <summary>Repacking a Set after resizing variants <span class="deep-tag">workflow tip</span></summary>
+          <div class="deep-body">
             <p>If you change a variant's size, the Set wrapper doesn't auto-resize. Select the Set and hit <span class="kbd">⌘ ⌥ ⇧ R</span> — Figma repacks it to the current contents. Without this, the plugin reads stale dimensions and fails validation.</p>
           </div>
+        </details>
 
-          <div>
-            <h3>Why every primitive needs a Set</h3>
-            <p>Even <code>background</code> and <code>timer</code> have only one variant — but they still need to live in a Component Set wrapper.</p>
-
-            <div class="callout callout-correction" style="margin: 14px 0;">
-              <p><strong>The current For The Win guide has this wrong.</strong> Background and timer there are plain Components, not Component Sets. Fix: select each, hit Add Variant once to create the dashed-rectangle Set, then delete the duplicate variant — leaving just <code>State=default</code>.</p>
-            </div>
-
-            <p><strong>Why bother?</strong> When you copy-paste between project files, only Component Sets keep the parent reference. Plain Components turn into orphaned instances on the receiving side, and the next dizajner has to manually relink every one. Component Sets travel cleanly.</p>
-
-            <h4>Mockup itself = Component too</h4>
-            <p>Wrap the assembled mockup frame (<code>Questline: ML SuperBowl</code>) as a Component as well. Then drag instances into your Mobile and Desktop preview frames for visual QA. If the design changes, all previews update at once.</p>
+        <details class="deep">
+          <summary>Mockup as a Component <span class="deep-tag">why</span></summary>
+          <div class="deep-body">
+            <p>Wrap the assembled mockup frame (<code>Questline: ML SuperBowl</code>) as a Component too. Then drag instances into your Mobile and Desktop preview frames for visual QA. If the design changes, all previews update at once.</p>
           </div>
-        </div>
+        </details>
 
-        <div class="callout callout-tip">
-          <p><strong>Quick visual test:</strong> if you see a dashed-purple rectangle around it, you're good. Solid-purple-only border = plain Component, needs to be wrapped.</p>
+        <details class="deep">
+          <summary>Fix from the in-Figma guide <span class="deep-tag">correction</span></summary>
+          <div class="deep-body">
+            <p>The current For The Win guide has <code>background</code> and <code>timer</code> as plain Components, not Component Sets. Fix: select each, hit Add Variant once to create the dashed-rectangle Set, then delete the duplicate variant — leaving just <code>State=default</code>.</p>
+          </div>
+        </details>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#background" data-page="components">10 Background</a>
+          <a href="#timer" data-page="components">15 Timer</a>
+          <a href="#naming" data-page="rules">17 Layer naming</a>
+          <a href="#preview-context" data-page="rules">19 Preview in context</a>
         </div>
       </section>
 
@@ -3149,35 +3198,58 @@
         <span class="section-label">04 — Workflow choice</span>
         <h2><span class="h-num">04</span>Approach A vs Approach B</h2>
         <p class="intro">
-          Two legitimate ways to assemble a questline file. Both end up at the same plugin
-          pipeline (Validate → Scan → Preview → Export) and ship the same final ZIP. The
-          difference is <em>how you get a working Figma file in the first place</em>. Pick by
-          situation, not by seniority — both senior and junior designers use both.
+          Two legitimate ways to assemble a questline file. Both end at the same plugin
+          pipeline and ship the same final ZIP. Pick by situation, not by seniority.
         </p>
+
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>Approach A — Swap inside template.</strong> Reuse a finished questline file, swap art inside <code>Visuals</code>. Routine theme work.</li>
+            <li><strong>Approach B — Build from scratch.</strong> Frame-first design, sign-off, then componentise. New layouts or rebuilding broken files.</li>
+            <li>The plugin contract (layer names, <code>Visuals</code> rule, state variants, pipeline) is <strong>identical</strong> in both.</li>
+            <li>Choose per-task: existing file usable → A · new layout or unfixable → B.</li>
+          </ul>
+        </div>
 
         <div class="two-col">
           <div style="background: var(--bg-1); border: 1px solid var(--border-soft); border-radius: var(--radius-lg); padding: 26px;">
             <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); font-weight: 700; margin-bottom: 8px;">APPROACH A · Swap inside template</div>
             <h3 style="margin-top: 6px;">Theme an existing project</h3>
             <p>Take a finished questline file from the brand UIKit (e.g. Mission to Grill). Duplicate it. Open each Component Set, and inside each variant's <code>Visuals</code> group, swap the artwork for the new theme. Don't touch layer names, Component Set wrappers, or hierarchy.</p>
-            <p style="font-size: 13.5px;"><strong>Use it when:</strong> the brand UIKit already has a questline file you can reuse. This is most routine theme work — Super Bowl over Thanksgiving, Mission to Grill repainted as For The Win, etc.</p>
-            <p style="font-size: 13.5px; color: var(--text-3);"><em>Trade-off:</em> you don't need to understand how the components are wired internally. If something breaks, you ping someone who knows the from-scratch path.</p>
           </div>
           <div style="background: var(--bg-1); border: 1px solid rgba(217,182,90,0.35); border-radius: var(--radius-lg); padding: 26px;">
             <div style="font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 8px;">APPROACH B · Build from scratch</div>
             <h3 style="margin-top: 6px;">Frame-first, then componentise</h3>
-            <p>Lay out the popup as a regular Figma Frame — header, rewards, quests, button, all as plain frames in the canvas. Tune composition, spacing, art, typography. Get sign-off from design lead and stakeholders. <em>Only after sign-off</em>, convert each piece into a Component, wrap into Component Sets, name everything per the plugin's contract, attach state variants, and reference the components from the assembled mockup as instances.</p>
-            <p style="font-size: 13.5px;"><strong>Use it when:</strong> the brand needs a brand-new questline structure that doesn't exist yet, or an existing file is too broken to debug. Sometimes faster to rebuild than to fix.</p>
-            <p style="font-size: 13.5px; color: var(--text-3);"><em>Trade-off:</em> takes longer up front; demands you know the layer-naming contract by heart and how Component Sets need to be wrapped. Pays off because you control the system root-up.</p>
+            <p>Lay out the popup as a regular Figma Frame first. Tune composition, spacing, art, typography. Get sign-off from design lead. <em>Only after sign-off</em>, convert each piece into a Component, wrap into Component Sets, name per the plugin's contract.</p>
           </div>
         </div>
 
-        <div class="callout callout-info">
-          <p><strong>What's the same in both approaches.</strong> The contract with the plugin is identical — same layer names, same <code>Visuals</code> rule, same state variants, same export pipeline. The plugin doesn't know or care which path got you here.</p>
-        </div>
+        <details class="deep">
+          <summary>When to use each — trade-offs <span class="deep-tag">decision aid</span></summary>
+          <div class="deep-body">
+            <h4>Approach A — when</h4>
+            <p>The brand UIKit already has a questline file you can reuse. Most routine theme work — Super Bowl over Thanksgiving, Mission to Grill repainted as For The Win.</p>
+            <p style="color: var(--text-3); font-size: 13.5px;"><em>Trade-off:</em> you don't need to understand how components are wired internally. If something breaks, ping someone who knows the from-scratch path.</p>
 
-        <div class="callout callout-tip">
-          <p><strong>How to choose for your current task.</strong> Does a usable questline file already exist for this brand and type? → <b>Approach A</b>. Are you launching a brand-new layout, or has an existing file gone unfixable? → <b>Approach B</b>. It's a per-task decision, not a career level.</p>
+            <h4 style="margin-top: 14px;">Approach B — when</h4>
+            <p>The brand needs a brand-new questline structure that doesn't exist yet, or an existing file is too broken to debug. Sometimes faster to rebuild than to fix.</p>
+            <p style="color: var(--text-3); font-size: 13.5px;"><em>Trade-off:</em> takes longer up front; demands you know the layer-naming contract by heart and how Component Sets need to be wrapped. Pays off because you control the system root-up.</p>
+          </div>
+        </details>
+
+        <details class="deep">
+          <summary>What's identical in both approaches <span class="deep-tag">contract</span></summary>
+          <div class="deep-body">
+            <p>The plugin doesn't know or care which path got you here. Same layer names, same <code>Visuals</code> rule, same state variants, same export pipeline. Validate → Scan → Preview → Export.</p>
+          </div>
+        </details>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#component-sets" data-page="anatomy">03 Component Sets</a>
+          <a href="#naming" data-page="rules">17 Layer naming</a>
+          <a href="#workflow" data-page="rules">20 Two-pass export</a>
         </div>
       </section>
 
@@ -3202,97 +3274,112 @@
       <section id="plugin-open">
         <span class="section-label">05 — Plugin</span>
         <h2><span class="h-num">05</span>Opening the plugin</h2>
-        <p class="intro">The plugin lives in the team's plugin library. Open via Figma's top menu:</p>
+        <p class="intro">Pick the right brand board → create a fresh page for the task → launch the plugin from Figma's top menu.</p>
 
-        <div class="callout callout-warn" style="margin-bottom: 28px;">
-          <p><strong>Account check before you open the plugin.</strong> The plugin is only authorised under the <code>figma@patrianna.com</code> Figma account, not the personal B2Spin account most designers use day-to-day. Workflow:</p>
-          <p style="margin-top: 8px;">① Design the popup in your <strong>B2Spin account</strong> (where the brand UIKit lives) → ② <strong>switch Figma to the Patrianna account</strong> (top-right avatar → Switch account) → ③ open the file there, run the plugin, validate / scan / export → ④ <strong>switch back to B2Spin</strong> with the clean version. The Patrianna account exists only for plugin access — final design lives in B2Spin.</p>
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>Account dance.</strong> Design in B2Spin → switch to <code>figma@patrianna.com</code> for plugin → switch back to B2Spin with clean version.</li>
+            <li><strong>Use the per-brand Collectables board.</strong> Four starred boards in Patrianna account: Collectables HM / SB / PF / ML.</li>
+            <li><strong>One new page per task.</strong> Name it after the Monday.com ticket. Drop on top of page list. Never reuse pages from past campaigns.</li>
+            <li>Plugin location: <code>Plugins</code> → <code>From B2Spin</code> → <strong>Figma Theme Exporter</strong>.</li>
+          </ul>
         </div>
 
-        <h3 style="margin-top: 28px;">Step 1 — pick the right per-brand testing board</h3>
-        <p>The plugin can only run inside one of the four <strong>per-brand testing boards</strong> in the Patrianna Figma account — one for each brand. The team has them starred in the left panel for quick access:</p>
-
-        <div style="display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: flex-start; margin: 18px 0;">
-          <figure style="margin: 0; max-width: 240px;">
-            <img decoding="async" loading="lazy" src="assets/figma/Screenshot 2026-05-03 at 09.36.10.png" alt="Figma left panel — 4 starred Collectables boards" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Figma sidebar → Starred → 4 boards: Collectables HM / SB / PF / ML</figcaption>
-          </figure>
-          <div>
-            <p>Each board is dedicated to one brand:</p>
-            <ul style="font-size: 14px;">
-              <li><strong>Collectables HM</strong> — Hello Millions</li>
-              <li><strong>Collectables SB</strong> — Spin Blitz</li>
-              <li><strong>Collectables PF</strong> — Playfame</li>
-              <li><strong>Collectables ML</strong> — McLuck</li>
-            </ul>
-            <p>If you don't see them starred, ask the design lead to share the boards with you and star them — they need to be in your Patrianna account's Starred section.</p>
-          </div>
-        </div>
-
-        <h3 style="margin-top: 28px;">Step 2 — create a new page at the top of the board, named after the task</h3>
-        <p>Open the brand board for the campaign you're working on. Inside, you'll see a list of pages — past campaigns. <strong>Don't dump your design into an existing page.</strong> Create a fresh one for every new task:</p>
-
-        <div style="display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: flex-start; margin: 18px 0;">
-          <div>
-            <ol style="font-size: 14px;">
-              <li>In the Figma file's left page panel, click <strong>+</strong> to add a new page.</li>
-              <li>Drag the new page to the <strong>top</strong> of the page list — newest task always sits on top so the team can find it without hunting.</li>
-              <li>Name it after the actual task / brief, e.g. <code>ML — Collectible Monetization — EOTM — Stamp Card — Coastline</code>. The exact name pattern follows the Monday.com ticket title for that campaign.</li>
-              <li>Paste your full Collectables section (components + mockup + preview frames) onto that fresh page.</li>
-              <li>Now you can run the plugin against the mockup frame on this page.</li>
-            </ol>
-            <div class="callout callout-warn" style="margin-top: 16px;">
-              <p><strong>Don't reuse pages from other campaigns.</strong> Past tasks have to stay intact for reference and audit. Always a new page per task.</p>
+        <details class="deep">
+          <summary>Step 1 — pick the right per-brand testing board <span class="deep-tag">setup</span></summary>
+          <div class="deep-body">
+            <div style="display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: flex-start;">
+              <figure style="margin: 0; max-width: 240px;">
+                <img decoding="async" loading="lazy" src="assets/figma/Screenshot 2026-05-03 at 09.36.10.png" alt="Figma left panel — 4 starred Collectables boards" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+                <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Figma sidebar → Starred → 4 boards: Collectables HM / SB / PF / ML</figcaption>
+              </figure>
+              <div>
+                <p>The plugin can only run inside one of the four <strong>per-brand testing boards</strong> in the Patrianna Figma account — one for each brand. The team has them starred in the left panel for quick access:</p>
+                <ul style="font-size: 14px;">
+                  <li><strong>Collectables HM</strong> — Hello Millions</li>
+                  <li><strong>Collectables SB</strong> — Spin Blitz</li>
+                  <li><strong>Collectables PF</strong> — Playfame</li>
+                  <li><strong>Collectables ML</strong> — McLuck</li>
+                </ul>
+                <p>If you don't see them starred, ask the design lead to share the boards with you and star them — they need to be in your Patrianna account's Starred section.</p>
+              </div>
             </div>
           </div>
-          <figure style="margin: 0; max-width: 380px;">
-            <img decoding="async" loading="lazy" src="assets/figma/Screenshot 2026-05-03 at 09.36.47.png" alt="Inside one Collectables board — page list with current task highlighted" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Inside Collectables ML — current task page sits at the top, marked with a red outline.</figcaption>
-          </figure>
-        </div>
+        </details>
 
-        <h3 style="margin-top: 28px;">Step 3 — open the plugin from the Figma top menu</h3>
-        <div style="display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center; margin: 18px 0;">
-          <figure style="margin: 0; max-width: 460px;">
-            <img decoding="async" loading="lazy" src="assets/plugin/menu.png" alt="Plugins menu screenshot" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Figma top menu → Plugins → From B2Spin → Figma Theme Exporter</figcaption>
-          </figure>
-          <div>
-            <ol style="font-size: 15px;">
-              <li><code>Plugins</code> menu (Figma top bar)</li>
-              <li><code>From B2Spin</code> submenu</li>
-              <li>Click <strong>Figma Theme Exporter</strong></li>
-            </ol>
-            <p>Plugin window opens.</p>
+        <details class="deep">
+          <summary>Step 2 — create a new page on the board, named after the task <span class="deep-tag">setup</span></summary>
+          <div class="deep-body">
+            <div style="display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: flex-start;">
+              <div>
+                <p>Open the brand board for the campaign you're working on. Inside, you'll see a list of pages — past campaigns. <strong>Don't dump your design into an existing page.</strong> Create a fresh one for every new task:</p>
+                <ol style="font-size: 14px;">
+                  <li>In the Figma file's left page panel, click <strong>+</strong> to add a new page.</li>
+                  <li>Drag the new page to the <strong>top</strong> of the page list — newest task always sits on top so the team can find it without hunting.</li>
+                  <li>Name it after the actual task / brief, e.g. <code>ML — Collectible Monetization — EOTM — Stamp Card — Coastline</code>. The exact name pattern follows the Monday.com ticket title for that campaign.</li>
+                  <li>Paste your full Collectables section (components + mockup + preview frames) onto that fresh page.</li>
+                  <li>Now you can run the plugin against the mockup frame on this page.</li>
+                </ol>
+                <p style="font-size: 13px; color: var(--text-3); margin-top: 10px;"><em>Don't reuse pages from other campaigns. Past tasks have to stay intact for reference and audit. Always a new page per task.</em></p>
+              </div>
+              <figure style="margin: 0; max-width: 380px;">
+                <img decoding="async" loading="lazy" src="assets/figma/Screenshot 2026-05-03 at 09.36.47.png" alt="Inside one Collectables board — page list with current task highlighted" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+                <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Inside Collectables ML — current task page sits at the top, marked with a red outline.</figcaption>
+              </figure>
+            </div>
           </div>
-        </div>
+        </details>
 
+        <details class="deep">
+          <summary>Step 3 — open the plugin from the top menu <span class="deep-tag">launch</span></summary>
+          <div class="deep-body">
+            <div style="display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center;">
+              <figure style="margin: 0; max-width: 460px;">
+                <img decoding="async" loading="lazy" src="assets/plugin/menu.png" alt="Plugins menu screenshot" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+                <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Figma top menu → Plugins → From B2Spin → Figma Theme Exporter</figcaption>
+              </figure>
+              <div>
+                <ol style="font-size: 15px;">
+                  <li><code>Plugins</code> menu (Figma top bar)</li>
+                  <li><code>From B2Spin</code> submenu</li>
+                  <li>Click <strong>Figma Theme Exporter</strong></li>
+                </ol>
+                <p>Plugin window opens.</p>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="deep">
+          <summary>Two-account workflow — full picture <span class="deep-tag">why both accounts</span></summary>
+          <div class="deep-body">
+            <p>The plugin is only authorised under the <code>figma@patrianna.com</code> Figma account, not the personal B2Spin account most designers use day-to-day.</p>
+            <p>① Design the popup in your <strong>B2Spin account</strong> (where the brand UIKit lives) → ② <strong>switch Figma to the Patrianna account</strong> (top-right avatar → Switch account) → ③ open the file there, run the plugin, validate / scan / export → ④ <strong>switch back to B2Spin</strong> with the clean version. The Patrianna account exists only for plugin access — final design lives in B2Spin.</p>
+          </div>
+        </details>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#plugin-scan" data-page="the-plugin">06 Validate &amp; Scan</a>
+          <a href="#sync-back" data-page="ship-it">26 Sync project ⇄ test</a>
+        </div>
       </section>
 
       <!-- ═══ PLUGIN: SCAN ═══ -->
       <section id="plugin-scan">
         <span class="section-label">06 — Plugin · Validate &amp; Scan</span>
         <h2><span class="h-num">06</span>Validate &amp; Scan tab — green-light the file</h2>
-        <p class="intro">
-          The first tab of the plugin. Two-step ritual: <strong>Validate</strong> first
-          (cheap, instant) → fix anything red or yellow → then <strong>Scan</strong>. Run
-          things in this order; don't try to scan a file that hasn't passed validation yet.
-        </p>
+        <p class="intro">First tab of the plugin. Two-step ritual: <strong>Validate</strong> first (instant) → fix anything red or yellow → then <strong>Scan</strong> (30–90 s). Don't reverse the order.</p>
 
-        <div class="callout callout-warn" style="margin-bottom: 22px;">
-          <p><strong>Before you click anything: check the active type tab at the top of the plugin.</strong> The plugin opens on the <strong>Wheel</strong> tab by default — not Questline. If you select your Questline mockup frame and Validate while the plugin is still on Wheel, you'll get a wall of red errors. Nothing is wrong with your design — the plugin is just looking for Wheel components and not finding any.</p>
-          <p style="margin-top: 8px;">Order matters: open plugin → click <strong>Questline</strong> tab → select frame in Figma → Validate. Skip the tab-check and you'll waste minutes diagnosing fake errors.</p>
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 22px 0;">
-          <figure style="margin: 0; background: var(--bg-1); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 12px;">
-            <img decoding="async" loading="lazy" src="assets/plugin/plugin-tab-wheel-default.png" alt="Plugin opens on Wheel tab by default" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 1px solid var(--border-soft);">
-            <figcaption style="font-size: 12.5px; color: var(--text-3); margin-top: 10px; line-height: 1.5;"><strong style="color: var(--accent);">①</strong> Plugin opens on the <strong>Wheel</strong> tab by default — easy to miss. Click <strong>Questline</strong> first.</figcaption>
-          </figure>
-          <figure style="margin: 0; background: var(--bg-1); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 12px;">
-            <img decoding="async" loading="lazy" src="assets/plugin/plugin-tab-wrong-error.png" alt="Validation error wall when wrong tab is active" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 1px solid var(--border-soft);">
-            <figcaption style="font-size: 12.5px; color: var(--text-3); margin-top: 10px; line-height: 1.5;"><strong style="color: var(--red);">②</strong> Validate on Wheel tab with a Questline frame selected → cascade of "errors". Looks scary; isn't real.</figcaption>
-          </figure>
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>Click the right type tab first.</strong> Plugin opens on <strong>Wheel</strong> by default — Questline frame + Wheel tab = wall of fake errors.</li>
+            <li><strong>Validate → fix → Scan.</strong> Validate is cheap, Scan is expensive. Don't scan a file that hasn't passed validation.</li>
+            <li><strong>Fix red AND yellow rows.</strong> Red = blocking. Yellow = popup misbehaves at runtime. Both must be clean.</li>
+            <li><strong>Quality 4× / Delay 1000 ms only on the final pass.</strong> Test passes use cheap settings to iterate fast.</li>
+          </ul>
         </div>
 
         <div class="plugin-shell">
@@ -3339,57 +3426,88 @@
           </div>
         </div>
 
-        <h3>The order: Validate → fix → Scan</h3>
-        <ol>
-          <li><strong>Validate</strong> — the cheap check. Walks the frame, verifies every required layer exists with correct naming and states. No rendering. <strong>Run this first.</strong> If anything red or yellow appears in the panel — fix it before moving on.</li>
-          <li><strong>If there are errors:</strong> open <a href="#mistakes">section 21 — Common mistakes</a> for the catalogue of usual culprits (missing <code>Visuals</code> group, wrong layer name, missing state variant, etc.). Fix them in Figma, click Validate again. Loop until 6/6 green.</li>
-          <li><strong>Scan Selection</strong> — the big primary button. Once validation is clean, this extracts positions + bounds for the JSON. Takes 30–90 seconds depending on Render Quality.</li>
-        </ol>
-
-        <h3 style="margin-top: 28px;">What each button on the tab does</h3>
-        <ul>
-          <li><strong>Validate</strong> — cheap layer check, see step 1 above.</li>
-          <li><strong>Scan Selection</strong> — the position/bounds extraction, see step 3.</li>
-          <li><strong>Web Preview</strong> — opens the standalone Web Preview tool with reveal animations (covered in <a href="#preview">section 23</a>).</li>
-          <li><strong>Scan &amp; Export (WebP)</strong> — <strong>one-click shortcut</strong>: scans + exports the WebP ZIP in a single action. Use this when you've already validated separately and you're confident the file is clean. Saves you from going Scan tab → Export tab manually. Don't use it before validation passes — you'll get a broken ZIP.</li>
-        </ul>
-
-        <div class="callout callout-warn">
-          <p><strong>Fix every coloured row — red AND yellow.</strong> Red rows are blocking errors (won't export at all). Yellow rows are warnings (export will run but the popup will misbehave at runtime — wrong size, missing state, off-by-one position). Don't ship until both are gone. The Validate panel must be all-green before you trust the result.</p>
-        </div>
-
-        <h3>The Scan progress modal</h3>
-        <p>Scanning shows progress through the 6 top-level items, then through each of the 5–6 quests' 4 states. You can cancel at any time.</p>
-
-        <div class="plugin-progress-card">
-          <div style="font-weight: 700; font-size: 16px; color: var(--text); margin-bottom: 14px;">Scanning Quests</div>
-          <div style="font-size: 12.5px; color: var(--text-2); margin-bottom: 8px; font-weight: 600;">Active Operations (1)</div>
-          <div style="background: #1c1c25; border-radius: 8px; padding: 16px;">
-            <div class="plugin-progress-head">
-              <div class="title"><span>⏳</span><span>Scanning Quests</span></div>
-              <div class="timer">23s</div>
-              <div class="cancel">Cancel</div>
+        <details class="deep">
+          <summary>The wrong-tab trap — why your "errors" might be fake <span class="deep-tag">gotcha · 1 min</span></summary>
+          <div class="deep-body">
+            <p>The plugin opens on the <strong>Wheel</strong> tab by default — not Questline. If you select your Questline mockup frame and click Validate while the plugin is still on Wheel, you'll get a cascade of red errors. Nothing is wrong with your design — the plugin is looking for Wheel components and not finding any.</p>
+            <p>Order matters: <strong>open plugin → click Questline tab → select frame in Figma → Validate</strong>. Skip the tab-check and you'll waste minutes diagnosing fake errors.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 14px;">
+              <figure style="margin: 0; background: var(--bg-2); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 12px;">
+                <img decoding="async" loading="lazy" src="assets/plugin/plugin-tab-wheel-default.png" alt="Plugin opens on Wheel tab by default" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 1px solid var(--border-soft);">
+                <figcaption style="font-size: 12.5px; color: var(--text-3); margin-top: 10px; line-height: 1.5;"><strong style="color: var(--accent);">①</strong> Plugin opens on Wheel by default — easy to miss.</figcaption>
+              </figure>
+              <figure style="margin: 0; background: var(--bg-2); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 12px;">
+                <img decoding="async" loading="lazy" src="assets/plugin/plugin-tab-wrong-error.png" alt="Validation error wall when wrong tab is active" style="width: 100%; height: auto; display: block; border-radius: 6px; border: 1px solid var(--border-soft);">
+                <figcaption style="font-size: 12.5px; color: var(--text-3); margin-top: 10px; line-height: 1.5;"><strong style="color: var(--red);">②</strong> Cascade of "errors" — fake. Just wrong tab.</figcaption>
+              </figure>
             </div>
-            <div class="plugin-progress-pct">50%</div>
-            <div class="plugin-progress-track"><div class="plugin-progress-fill" style="width: 50%;"></div></div>
-            <div class="plugin-progress-detail">3 of 6 items · Extracting button…</div>
           </div>
-        </div>
+        </details>
 
-        <h3 style="margin-top: 32px;">The Scan-tab states, real screenshots</h3>
-        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 18px 0;">
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/scan-tab-clean.png" alt="Validate clean — 6/6 passed" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--green);">①</strong> Validate finishes — 6/6 green checkmarks. Ready for Scan Selection.</figcaption>
-          </figure>
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/scanning-progress.png" alt="Scanning Quests modal in progress" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--text);">②</strong> Scanning in progress — modal shows current step ("Scanning Quests"). You can Cancel any time.</figcaption>
-          </figure>
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/scan-tab-after-scan.png" alt="Scan finished — Found 10 elements" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--green);">③</strong> Scan finished — "Found 10 elements", all green. Now switch to Preview.</figcaption>
-          </figure>
+        <details class="deep">
+          <summary>The order: Validate → fix → Scan <span class="deep-tag">workflow</span></summary>
+          <div class="deep-body">
+            <ol>
+              <li><strong>Validate</strong> — the cheap check. Walks the frame, verifies every required layer exists with correct naming and states. No rendering. <strong>Run this first.</strong> If anything red or yellow appears in the panel — fix it before moving on.</li>
+              <li><strong>If there are errors:</strong> open <a href="#mistakes">section 21 — Common mistakes</a> for the catalogue of usual culprits (missing <code>Visuals</code> group, wrong layer name, missing state variant, etc.). Fix them in Figma, click Validate again. Loop until 6/6 green.</li>
+              <li><strong>Scan Selection</strong> — the big primary button. Once validation is clean, this extracts positions + bounds for the JSON. Takes 30–90 seconds depending on Render Quality.</li>
+            </ol>
+            <p style="margin-top: 12px;"><strong>Red AND yellow.</strong> Red rows are blocking errors (won't export at all). Yellow rows are warnings (export will run but the popup will misbehave at runtime — wrong size, missing state, off-by-one position). The Validate panel must be all-green before you trust the result.</p>
+          </div>
+        </details>
+
+        <details class="deep">
+          <summary>What each button does <span class="deep-tag">reference</span></summary>
+          <div class="deep-body">
+            <ul>
+              <li><strong>Validate</strong> — cheap layer check. Run first.</li>
+              <li><strong>Scan Selection</strong> — the position/bounds extraction. Run after validate is clean.</li>
+              <li><strong>Web Preview</strong> — opens the standalone Web Preview tool with reveal animations (covered in <a href="#preview" data-page="ship-it">section 23</a>).</li>
+              <li><strong>Scan &amp; Export (WebP)</strong> — one-click shortcut: scans + exports the WebP ZIP in a single action. Use when you've already validated separately and you're confident the file is clean. Don't use it before validation passes — you'll get a broken ZIP.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="deep">
+          <summary>The Scan progress modal &amp; tab states <span class="deep-tag">visuals</span></summary>
+          <div class="deep-body">
+            <p>Scanning shows progress through the 6 top-level items, then through each of the 5–6 quests' 4 states. You can cancel at any time.</p>
+            <div class="plugin-progress-card" style="margin-top: 14px;">
+              <div style="font-weight: 700; font-size: 16px; color: var(--text); margin-bottom: 14px;">Scanning Quests</div>
+              <div style="font-size: 12.5px; color: var(--text-2); margin-bottom: 8px; font-weight: 600;">Active Operations (1)</div>
+              <div style="background: #1c1c25; border-radius: 8px; padding: 16px;">
+                <div class="plugin-progress-head">
+                  <div class="title"><span>⏳</span><span>Scanning Quests</span></div>
+                  <div class="timer">23s</div>
+                  <div class="cancel">Cancel</div>
+                </div>
+                <div class="plugin-progress-pct">50%</div>
+                <div class="plugin-progress-track"><div class="plugin-progress-fill" style="width: 50%;"></div></div>
+                <div class="plugin-progress-detail">3 of 6 items · Extracting button…</div>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 18px 0 0;">
+              <figure style="margin: 0;">
+                <img decoding="async" loading="lazy" src="assets/plugin/scan-tab-clean.png" alt="Validate clean — 6/6 passed" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+                <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--green);">①</strong> Validate finishes — 6/6 green.</figcaption>
+              </figure>
+              <figure style="margin: 0;">
+                <img decoding="async" loading="lazy" src="assets/plugin/scanning-progress.png" alt="Scanning Quests modal in progress" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+                <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--text);">②</strong> Scanning — current step shown.</figcaption>
+              </figure>
+              <figure style="margin: 0;">
+                <img decoding="async" loading="lazy" src="assets/plugin/scan-tab-after-scan.png" alt="Scan finished — Found 10 elements" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+                <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--green);">③</strong> Scan finished — "Found 10 elements".</figcaption>
+              </figure>
+            </div>
+          </div>
+        </details>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#plugin-preview" data-page="the-plugin">07 Preview tab</a>
+          <a href="#mistakes" data-page="rules-workflow">21 Common mistakes</a>
+          <a href="#plugin-settings" data-page="the-plugin">09 Settings — test vs final</a>
         </div>
       </section>
 
@@ -3397,10 +3515,17 @@
       <section id="plugin-preview">
         <span class="section-label">07 — Plugin · Preview</span>
         <h2><span class="h-num">07</span>Preview tab — QA inside the plugin</h2>
-        <p class="intro">
-          After Scan completes, the Preview tab renders the assembled mockup at 366×572 with
-          state-toggle pills at the top. Click pills to swap variants — instant visual feedback.
-        </p>
+        <p class="intro">After Scan completes, the Preview tab renders the assembled mockup at 366×572 with state-toggle pills. Click pills to swap variants — instant visual feedback.</p>
+
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>Three presets to verify:</strong> Active (just opened), Success (rewards claimed + confetti), Fail (time's up + desaturated).</li>
+            <li><strong>Click every pill.</strong> Quest × 4, Header × 3, Button × 4 — eyeball each variant before exporting.</li>
+            <li><strong>Wireframe toggle.</strong> Switch off graphics to see structural skeleton — catches misalignment that art was hiding.</li>
+            <li><strong>Position right + art wrong = fix art, not bounds.</strong> If wireframe looks correct but graphics overflows, your asset is the problem.</li>
+          </ul>
+        </div>
 
         <div style="background: var(--bg-1); border: 1px solid var(--border-soft); border-radius: var(--radius-lg); padding: 24px; max-width: 720px;">
           <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; font-size: 13px;">
@@ -3413,81 +3538,100 @@
           </div>
         </div>
 
-        <h3>Three core preview presets</h3>
-        <ul>
-          <li><strong>Active state</strong> — Quest=Active, Header=Active, Button=Default. The "user just opened" view with the FOR THE WIN logo in vivid colour.</li>
-          <li><strong>Success state</strong> — Quest=Completed, Header=Success ("REWARDS CLAIMED" with confetti), Button=Default. Celebration view.</li>
-          <li><strong>Fail state</strong> — Quest=Completed (or Locked, depending), Header=Fail (desaturated logo, "TIME'S UP…"), Button=Active. Time-ran-out view.</li>
-        </ul>
+        <details class="deep">
+          <summary>Three core preview presets <span class="deep-tag">QA flow</span></summary>
+          <div class="deep-body">
+            <ul>
+              <li><strong>Active state</strong> — Quest=Active, Header=Active, Button=Default. The "user just opened" view with the FOR THE WIN logo in vivid colour.</li>
+              <li><strong>Success state</strong> — Quest=Completed, Header=Success ("REWARDS CLAIMED" with confetti), Button=Default. Celebration view.</li>
+              <li><strong>Fail state</strong> — Quest=Completed (or Locked, depending), Header=Fail (desaturated logo, "TIME'S UP…"), Button=Active. Time-ran-out view.</li>
+            </ul>
+          </div>
+        </details>
 
-        <div class="callout callout-tip">
-          <p><strong>Wireframe ⇄ Graphics toggle.</strong> Switch to Wireframe to see just the coloured rectangles (header in orange, rewards in orange, quests in green, button in blue). If positions look right in Wireframe but wrong in Graphics, your art overflows the component bounds — fix art, not bounds.</p>
-        </div>
+        <details class="deep">
+          <summary>Wireframe vs Graphics — toggle both <span class="deep-tag">debugging</span></summary>
+          <div class="deep-body">
+            <p>Preview opens in <strong>graphics</strong> mode by default — popup as users will see it. Toggle <strong>wireframe</strong> to see just the coloured rectangles (header in orange, rewards in orange, quests in green, button in blue). If positions look right in Wireframe but wrong in Graphics, your art overflows the component bounds — fix the art, not the bounds.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 14px 0 0;">
+              <figure style="margin: 0;">
+                <img decoding="async" loading="lazy" src="assets/plugin/preview-graphics.png" alt="Preview tab — graphics mode" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+                <figcaption style="font-size: 12.5px; color: var(--text-3); margin-top: 8px;">Graphics — what users see.</figcaption>
+              </figure>
+              <figure style="margin: 0;">
+                <img decoding="async" loading="lazy" src="assets/plugin/preview-wireframe.png" alt="Preview tab — wireframe mode" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+                <figcaption style="font-size: 12.5px; color: var(--text-3); margin-top: 8px;">Wireframe — structural skeleton.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </details>
 
-        <h3 style="margin-top: 32px;">Preview tab — graphics mode (default) and wireframe</h3>
-        <p>The Preview tab opens in <strong>graphics</strong> mode automatically — your popup as it'll actually look. Use the zoom buttons in the top-right of the preview area to inspect detail. Toggle <strong>wireframe</strong> mode to verify components are positioned correctly without art distracting you.</p>
+        <details class="deep">
+          <summary>All four Quest states <span class="deep-tag">cycle pills · 30 s</span></summary>
+          <div class="deep-body">
+            <p>Quest = Locked / Active / Unclaimed / Completed. Click each pill at the top, eyeball each variant. Per Michal's rule, <code>locked</code> looks the same as <code>active</code> and <code>unclaimed</code> looks the same as <code>completed</code> — but you still verify all four are present and correct.</p>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 14px 0 0;">
+              <figure style="margin: 0;">
+                <img decoding="async" loading="lazy" src="assets/plugin/preview-quest-locked.png" alt="Quest=Locked" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 6px;">
+                <figcaption style="font-size: 11.5px; color: var(--text-3); margin-top: 6px; text-align: center;">Locked</figcaption>
+              </figure>
+              <figure style="margin: 0;">
+                <img decoding="async" loading="lazy" src="assets/plugin/preview-quest-active.png" alt="Quest=Active" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 6px;">
+                <figcaption style="font-size: 11.5px; color: var(--text-3); margin-top: 6px; text-align: center;">Active</figcaption>
+              </figure>
+              <figure style="margin: 0;">
+                <img decoding="async" loading="lazy" src="assets/plugin/preview-quest-unclaimed.png" alt="Quest=Unclaimed" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 6px;">
+                <figcaption style="font-size: 11.5px; color: var(--text-3); margin-top: 6px; text-align: center;">Unclaimed</figcaption>
+              </figure>
+              <figure style="margin: 0;">
+                <img decoding="async" loading="lazy" src="assets/plugin/preview-quest-completed.png" alt="Quest=Completed" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 6px;">
+                <figcaption style="font-size: 11.5px; color: var(--text-3); margin-top: 6px; text-align: center;">Completed</figcaption>
+              </figure>
+            </div>
+          </div>
+        </details>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 18px 0;">
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/preview-graphics.png" alt="Preview tab — graphics mode" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-            <figcaption style="font-size: 12.5px; color: var(--text-3); margin-top: 8px;">Graphics mode — what users will actually see.</figcaption>
-          </figure>
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/preview-wireframe.png" alt="Preview tab — wireframe mode" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-            <figcaption style="font-size: 12.5px; color: var(--text-3); margin-top: 8px;">Wireframe — structural skeleton, components without their visuals. Catches misalignment fast.</figcaption>
-          </figure>
-        </div>
+        <details class="deep">
+          <summary>Header states (3) <span class="deep-tag">cycle pills · 20 s</span></summary>
+          <div class="deep-body">
+            <p>Header = Active / Success / Fail. Active is what you see by default; click Success and Fail to confirm those visuals fire correctly.</p>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 14px 0 0;">
+              <figure style="margin: 0;">
+                <img decoding="async" loading="lazy" src="assets/plugin/preview-header-active.png" alt="Header=Active" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 6px;">
+                <figcaption style="font-size: 11.5px; color: var(--text-3); margin-top: 6px; text-align: center;">Active</figcaption>
+              </figure>
+              <figure style="margin: 0;">
+                <img decoding="async" loading="lazy" src="assets/plugin/preview-header-success.png" alt="Header=Success" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 6px;">
+                <figcaption style="font-size: 11.5px; color: var(--text-3); margin-top: 6px; text-align: center;">Success — confetti</figcaption>
+              </figure>
+              <figure style="margin: 0;">
+                <img decoding="async" loading="lazy" src="assets/plugin/preview-header-fail.png" alt="Header=Fail" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 6px;">
+                <figcaption style="font-size: 11.5px; color: var(--text-3); margin-top: 6px; text-align: center;">Fail — desaturated</figcaption>
+              </figure>
+            </div>
+          </div>
+        </details>
 
-        <h3 style="margin-top: 32px;">Click through every Quest state</h3>
-        <p>Quest = Locked / Active / Unclaimed / Completed. Click each pill at the top, eyeball each variant in the preview. Per Michal's rule, <code>locked</code> looks the same as <code>active</code> and <code>unclaimed</code> looks the same as <code>completed</code> — but you still verify all four are present and correct.</p>
+        <details class="deep">
+          <summary>Button states (quick check) <span class="deep-tag">cycle pills · 15 s</span></summary>
+          <div class="deep-body">
+            <p>Button is brand-fixed and shouldn't normally change between themes — but click through all four states (Default / Disabled / Hover / Active) to confirm the brand-button copy you used has all variants intact.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 14px 0 0;">
+              <figure style="margin: 0;">
+                <img decoding="async" loading="lazy" src="assets/plugin/preview-button-1.png" alt="Button states view 1" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+              </figure>
+              <figure style="margin: 0;">
+                <img decoding="async" loading="lazy" src="assets/plugin/preview-button-2.png" alt="Button states view 2" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+              </figure>
+            </div>
+          </div>
+        </details>
 
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 18px 0;">
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/preview-quest-locked.png" alt="Quest=Locked" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 6px;">
-            <figcaption style="font-size: 11.5px; color: var(--text-3); margin-top: 6px; text-align: center;">Quest = Locked</figcaption>
-          </figure>
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/preview-quest-active.png" alt="Quest=Active" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 6px;">
-            <figcaption style="font-size: 11.5px; color: var(--text-3); margin-top: 6px; text-align: center;">Quest = Active</figcaption>
-          </figure>
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/preview-quest-unclaimed.png" alt="Quest=Unclaimed" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 6px;">
-            <figcaption style="font-size: 11.5px; color: var(--text-3); margin-top: 6px; text-align: center;">Quest = Unclaimed</figcaption>
-          </figure>
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/preview-quest-completed.png" alt="Quest=Completed" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 6px;">
-            <figcaption style="font-size: 11.5px; color: var(--text-3); margin-top: 6px; text-align: center;">Quest = Completed</figcaption>
-          </figure>
-        </div>
-
-        <h3 style="margin-top: 32px;">Click through Header states too</h3>
-        <p>Header = Active / Success / Fail. The Active state is what you see by default; click Success and Fail to confirm those visuals fire correctly.</p>
-
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 18px 0;">
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/preview-header-active.png" alt="Header=Active" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 6px;">
-            <figcaption style="font-size: 11.5px; color: var(--text-3); margin-top: 6px; text-align: center;">Header = Active</figcaption>
-          </figure>
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/preview-header-success.png" alt="Header=Success" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 6px;">
-            <figcaption style="font-size: 11.5px; color: var(--text-3); margin-top: 6px; text-align: center;">Header = Success — confetti</figcaption>
-          </figure>
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/preview-header-fail.png" alt="Header=Fail" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 6px;">
-            <figcaption style="font-size: 11.5px; color: var(--text-3); margin-top: 6px; text-align: center;">Header = Fail — desaturated</figcaption>
-          </figure>
-        </div>
-
-        <h3 style="margin-top: 32px;">Button states (quick check)</h3>
-        <p>Button is brand-fixed and shouldn't normally change between themes — but click through all four states (Default / Disabled / Hover / Active) to confirm the brand-button copy you used has all variants intact.</p>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 18px 0;">
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/preview-button-1.png" alt="Button states view 1" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-          </figure>
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/preview-button-2.png" alt="Button states view 2" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-          </figure>
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#plugin-export" data-page="the-plugin">08 Export tab</a>
+          <a href="#preview" data-page="ship-it">23 Web Preview (full)</a>
+          <a href="#preview-context" data-page="rules-workflow">19 Preview in context</a>
         </div>
       </section>
 
@@ -3495,10 +3639,17 @@
       <section id="plugin-export">
         <span class="section-label">08 — Plugin · Export</span>
         <h2><span class="h-num">08</span>Export tab — WebP only</h2>
-        <p class="intro">
-          Two big buttons: <strong>Export as WebP</strong> (the only one you should use) and
-          Export as PNG (fallback only). Below them, an Export Settings panel with two tunables.
-        </p>
+        <p class="intro">Two big buttons: <strong>Export as WebP</strong> (use this) and Export as PNG (fallback only). Below them, an Export Settings panel with two tunables — set them once, leave them.</p>
+
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>Always WebP.</strong> PNG triples ZIP size and Retool prefers WebP.</li>
+            <li><strong>Quality = 100.</strong> Anything lower visibly degrades the popup.</li>
+            <li><strong>Compression Method = 3.</strong> The speed/size sweet spot.</li>
+            <li><strong>Filename convention matters.</strong> When the save dialog opens, type the proper name (see <a href="#export" data-page="ship-it">section 22 — ZIP &amp; naming</a>).</li>
+          </ul>
+        </div>
 
         <div class="plugin-shell">
           <div class="plugin-titlebar">
@@ -3528,37 +3679,55 @@
           </div>
         </div>
 
-        <div class="callout callout-key">
-          <p style="font-size: 15px;"><strong>Always WebP. Always Quality 100. Always Compression Method 3.</strong> These are the production values. PNG triples ZIP size and Retool prefers WebP. Quality below 100 visibly degrades the popup. Method 3 is the speed/size sweet spot.</p>
-        </div>
+        <details class="deep">
+          <summary>Real Export tab screenshots <span class="deep-tag">visuals</span></summary>
+          <div class="deep-body">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+              <figure style="margin: 0;">
+                <img decoding="async" loading="lazy" src="assets/plugin/export-tab.png" alt="Export tab — collapsed view" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+                <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Export tab as it opens — two buttons + collapsed Settings.</figcaption>
+              </figure>
+              <figure style="margin: 0;">
+                <img decoding="async" loading="lazy" src="assets/plugin/export-tab-settings.png" alt="Export tab with Export Settings expanded" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+                <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Settings expanded — confirm <code>Quality = 100</code>, <code>Method = 3</code>.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </details>
 
-        <h3 style="margin-top: 28px;">Real Export tab screenshots</h3>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 18px 0;">
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/export-tab.png" alt="Export tab — collapsed view" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Export tab as it opens — two buttons + collapsed Settings section.</figcaption>
-          </figure>
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/export-tab-settings.png" alt="Export tab with Export Settings expanded" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Export Settings expanded — confirm <code>Quality = 100</code>, <code>Compression Method = 3</code>.</figcaption>
-          </figure>
-        </div>
+        <details class="deep">
+          <summary>The save dialog &amp; filename convention <span class="deep-tag">handoff</span></summary>
+          <div class="deep-body">
+            <p>When the export finishes, the browser save dialog opens. Type the filename per convention right here — don't rename later. Pattern: <code>ML - Collectible Monetization - Questline - Superbowl - 02.05.2026.zip</code>. Full naming pattern in <a href="#export" data-page="ship-it">section 22</a>.</p>
+            <figure style="margin: 12px 0 0;">
+              <img decoding="async" loading="lazy" src="assets/plugin/save-dialog.png" alt="Save dialog with proper filename" style="max-width: 480px; width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+            </figure>
+          </div>
+        </details>
 
-        <figure style="margin: 18px 0;">
-          <img decoding="async" loading="lazy" src="assets/plugin/save-dialog.png" alt="Save dialog with proper filename" style="max-width: 480px; width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-          <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">When the export finishes, the browser save dialog opens. Type the filename per convention: <code>ML - Collectible Monetization - Questline - Superbowl - 02.05.2026.zip</code>. (See section 19 for the full naming pattern.)</figcaption>
-        </figure>
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#plugin-settings" data-page="the-plugin">09 Settings — test vs final</a>
+          <a href="#export" data-page="ship-it">22 ZIP &amp; naming</a>
+          <a href="#monday" data-page="ship-it">25 Monday handoff</a>
+        </div>
       </section>
 
       <!-- ═══ PLUGIN: SETTINGS ═══ -->
       <section id="plugin-settings">
         <span class="section-label">09 — Plugin · Settings</span>
         <h2><span class="h-num">09</span>Settings — the two values that matter</h2>
-        <p class="intro">
-          Open via the gear icon (top-right of the plugin window). Most settings stay default;
-          two of them change between your <strong>test pass</strong> and your <strong>final
-          export pass</strong>. This is the entire reason workflow has two passes.
-        </p>
+        <p class="intro">Open via the gear icon (top-right). Most settings stay default; two change between <strong>test pass</strong> and <strong>final export pass</strong>. This is the whole reason the workflow has two passes.</p>
+
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>Test pass:</strong> State Change Delay <code>100–250 ms</code>, Export Quality <code>1×</code>. Iterate fast.</li>
+            <li><strong>Final pass:</strong> State Change Delay <code>1000 ms</code>, Export Quality <code>4×</code>. Slow but rock-solid.</li>
+            <li><strong>Other settings — leave default.</strong> Debug Mode off, Show Active Operations on, Dark Theme on.</li>
+            <li><strong>Don't minimise the plugin.</strong> Collapse loses scan state; you'll have to Scan Selection all over again.</li>
+          </ul>
+        </div>
 
         <div class="settings-pair">
           <div class="settings-card">
@@ -3567,7 +3736,7 @@
             <p>You're still tweaking design, swapping art, fixing layer names. You'll re-scan many times. Keep settings cheap:</p>
             <div class="settings-panel" style="margin-top: 14px;">
               <div class="settings-row">
-                <div><div class="settings-label">State Change Delay</div><div class="settings-help">Anywhere in the <strong>100–250 ms</strong> range works. Lower = faster scan + slightly lower output quality. Pick what you can stand.</div></div>
+                <div><div class="settings-label">State Change Delay</div><div class="settings-help">Anywhere in the <strong>100–250 ms</strong> range works. Lower = faster scan + slightly lower output quality.</div></div>
                 <div class="input-mini" style="color: var(--text);">250</div>
               </div>
               <div class="settings-row">
@@ -3599,16 +3768,28 @@
           </div>
         </div>
 
-        <div class="callout callout-info">
-          <p><strong>Other settings — leave default.</strong> Debug Mode off, Show Active Operations on, Dark Theme on. Plugin v1.7.6, Export Format v2.1.</p>
-        </div>
+        <details class="deep">
+          <summary>Don't collapse the plugin — you'll lose scan state <span class="deep-tag">gotcha</span></summary>
+          <div class="deep-body">
+            <p>The plugin has a "minimise" control (the double-arrow icon in the top-right) that collapses it to a tiny strip. <strong>Avoid using it during a session.</strong> If you collapse and re-expand, you'll need to run <strong>Scan Selection</strong> all over again — the plugin loses its scan state on collapse. Just leave it open or move it out of the way; don't minimise.</p>
+            <figure style="margin: 12px 0 0;">
+              <img decoding="async" loading="lazy" src="assets/plugin/plugin-collapsed.png" alt="Collapsed plugin window — looks like a thin strip" style="max-width: 360px; width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 6px;">
+              <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Collapsed plugin — barely visible, easy to leave like this by accident.</figcaption>
+            </figure>
+          </div>
+        </details>
 
-        <div class="callout callout-warn">
-          <p><strong>Don't collapse the plugin window.</strong> The plugin has a "minimise" control (the double-arrow icon in the top-right) that collapses it down to a tiny strip. <em>Avoid using it during a session.</em> If you collapse and re-expand, you'll need to run <strong>Scan Selection</strong> all over again — the plugin loses its scan state on collapse. Just leave it open or move it out of the way; don't minimise.</p>
-          <figure style="margin: 12px 0 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/plugin-collapsed.png" alt="Collapsed plugin window — looks like a thin strip" style="max-width: 360px; width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 6px;">
-            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Collapsed plugin — barely visible, easy to leave like this by accident.</figcaption>
-          </figure>
+        <details class="deep">
+          <summary>Plugin &amp; format versions <span class="deep-tag">reference</span></summary>
+          <div class="deep-body">
+            <p>Plugin <code>v1.7.6</code>. Export Format <code>v2.1</code>. Both shown in the gear-icon settings. If your version mismatches, ping the design lead — older format versions Retool may reject.</p>
+          </div>
+        </details>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#workflow" data-page="rules-workflow">20 Two-pass export</a>
+          <a href="#plugin-export" data-page="the-plugin">08 Export tab</a>
         </div>
       </section>
 
@@ -4236,10 +4417,17 @@
       <section id="naming">
         <span class="section-label">17 — Rules</span>
         <h2><span class="h-num">17</span>Layer naming, exactly as the plugin expects</h2>
-        <p class="intro">
-          Plugin matches by exact name. One typo and validation fails with a vague hint.
-          Cheat-sheet:
-        </p>
+        <p class="intro">Plugin matches by exact name. One typo and validation fails with a vague hint. Cheat-sheet below.</p>
+
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>Names are hard-coded.</strong> <code>background</code>, <code>header</code>, <code>rewards</code>, <code>quest1…quest5</code>, <code>button</code>, <code>timer</code> — exact, lowercase.</li>
+            <li><strong>State variants must exist.</strong> Every required state listed in the table — even if visually identical to another (e.g. <code>locked</code> = <code>active</code>).</li>
+            <li><strong><code>Visuals</code> and <code>Properties</code> are reserved.</strong> Don't rename to "Art" or "Layout" — plugin loses the export target.</li>
+            <li><strong><code>description</code> is not a separate component.</strong> It lives inside background.</li>
+          </ul>
+        </div>
 
         <table class="naming-table">
           <thead>
@@ -4319,40 +4507,71 @@
             </tr>
           </tbody>
         </table>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#visuals" data-page="rules-workflow">18 Visuals rule</a>
+          <a href="#component-sets" data-page="anatomy">11 Component Sets</a>
+          <a href="#mistakes" data-page="rules-workflow">21 Common mistakes</a>
+        </div>
       </section>
 
       <!-- ═══ VISUALS RULE ═══ -->
       <section id="visuals">
         <span class="section-label">18 — The most important rule</span>
         <h2><span class="h-num">18</span>The <code>Visuals</code> group becomes a raster</h2>
+        <p class="intro">Everything inside a <code>Visuals</code> group exports as a flat WebP image. Vector → pixels. Editable text → pixels. Auto-layout → frozen.</p>
+
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>Decorative goes inside <code>Visuals</code>.</strong> Theme illustrations, icons, background art.</li>
+            <li><strong>Live data stays outside.</strong> Timer text, button label — runtime must update them dynamically.</li>
+            <li><strong>Button &amp; timer: no image fills.</strong> Vector only — color, gradient, stroke, dropshadow.</li>
+            <li><strong>The clipping contract.</strong> Clip Content ON, frame fits art tightly, frame never smaller than art. All three or you ship broken.</li>
+          </ul>
+        </div>
 
         <div class="callout callout-key" style="max-width: 920px;">
-          <p style="font-size: 16px;"><strong>Everything inside a <code>Visuals</code> group gets exported as a flat WebP image.</strong> Vector? Becomes pixels. Editable text? Becomes pixels. Auto-layout? Frozen. Per the in-Figma guide: <em>"All visuals go into the visuals group. Simplest version: just an image, change the image selection on the fill."</em></p>
+          <p style="font-size: 16px;"><strong>Everything inside a <code>Visuals</code> group gets exported as a flat WebP image.</strong> Per the in-Figma guide: <em>"All visuals go into the visuals group. Simplest version: just an image, change the image selection on the fill."</em></p>
         </div>
 
-        <p>Inside every Component variant — header, rewards, every quest, every reward state — there's a group named <strong>Visuals</strong>. That's the rendered surface.</p>
+        <details class="deep">
+          <summary>What goes where — inside vs outside Visuals <span class="deep-tag">rules</span></summary>
+          <div class="deep-body">
+            <p>Inside every Component variant — header, rewards, every quest, every reward state — there's a group named <strong>Visuals</strong>. That's the rendered surface.</p>
+            <ul>
+              <li><strong>Inside <code>Visuals</code></strong> — theme illustrations, decorative icons, background art. Anything purely decorative.</li>
+              <li><strong>Outside <code>Visuals</code></strong> — live runtime data: timer text, button label. Runtime needs to update these dynamically — they can't be raster.</li>
+              <li><strong>Button &amp; timer never use image fills.</strong> They're vector only — color, gradient, stroke, dropshadow.</li>
+            </ul>
+          </div>
+        </details>
 
-        <h3>What goes where</h3>
-        <ul>
-          <li><strong>Inside <code>Visuals</code></strong> — theme illustrations, decorative icons, background art. Anything purely decorative.</li>
-          <li><strong>Outside <code>Visuals</code></strong> — live runtime data: timer text, button label. Runtime needs to update these dynamically — they can't be raster.</li>
-          <li><strong>Button &amp; timer never use image fills.</strong> They're vector only — color, gradient, stroke, dropshadow.</li>
-        </ul>
+        <details class="deep">
+          <summary>The clipping contract — three rules that work together <span class="deep-tag">contract</span></summary>
+          <div class="deep-body">
+            <p>Skip any one of them and the popup ships broken on web:</p>
+            <ol>
+              <li><strong>Clip Content is ON</strong> for every <code>Visuals</code> frame and every variant frame. Settings → "Clip content" checkbox. Always.</li>
+              <li><strong>Visuals frame fits the artwork tightly.</strong> No empty padding around your art, no oversized invisible margins. Resize the <code>Visuals</code> frame down to hug the content.</li>
+              <li><strong>Visuals frame is never <em>smaller</em> than the artwork inside.</strong> If your art overflows the frame, on export the plugin crops whatever bleeds outside — and on web that crop becomes the visible bug.</li>
+            </ol>
+            <p style="margin-top: 12px;"><strong>Why all three matter.</strong> If Clip Content is OFF, you don't see the bleed in Figma — the canvas shows the overflow as if it's fine. Then the plugin renders to WebP and silently crops the overflow. Result: popup looks intact in Figma but broken on production. Turning Clip Content ON in Figma reveals the same crop visually — so you catch it before export.</p>
+          </div>
+        </details>
 
-        <h3>The clipping contract — Visuals frame size = artwork size, exactly</h3>
-        <p>Three rules that work together. Skip any one of them and the popup ships broken on web:</p>
-        <ol>
-          <li><strong>Clip Content is ON</strong> for every <code>Visuals</code> frame and every variant frame. Settings → "Clip content" checkbox. Always.</li>
-          <li><strong>Visuals frame fits the artwork tightly.</strong> No empty padding around your art, no oversized invisible margins. Resize the <code>Visuals</code> frame down to hug the content.</li>
-          <li><strong>Visuals frame is never <em>smaller</em> than the artwork inside.</strong> If your art overflows the frame, on export the plugin crops whatever bleeds outside — and on web that crop becomes the visible bug.</li>
-        </ol>
+        <details class="deep">
+          <summary>Fast self-check — fit-to-content shortcut <span class="deep-tag">tip · 5 s</span></summary>
+          <div class="deep-body">
+            <p>Select the <code>Visuals</code> frame. Press <span class="kbd">⌥ ⇧ K</span> to fit-to-content (or toggle Resize to fit content in the right panel). If anything jumps in size — your frame had loose margins or a hidden overflow. Fix it now, not on web.</p>
+          </div>
+        </details>
 
-        <div class="callout callout-warn">
-          <p><strong>Why all three matter.</strong> If Clip Content is OFF, you don't see the bleed in Figma — the canvas shows the overflow as if it's fine. Then the plugin renders to WebP and silently crops the overflow. Result: popup looks intact in Figma but broken on production. Turning Clip Content ON in Figma reveals the same crop visually — so you catch it before export.</p>
-        </div>
-
-        <div class="callout callout-tip">
-          <p><strong>Fast self-check.</strong> Select the <code>Visuals</code> frame. Press <span class="kbd">⌥ ⇧ K</span> to fit-to-content (or just toggle Resize to fit content in the right panel). If anything jumps in size — your frame had loose margins or a hidden overflow. Fix it now, not on web.</p>
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#mistakes" data-page="rules-workflow">21 Common mistakes</a>
+          <a href="#anatomy" data-page="anatomy">10 Component anatomy</a>
         </div>
       </section>
 
@@ -4360,28 +4579,27 @@
       <section id="preview-context">
         <span class="section-label">19 — Visual sign-off</span>
         <h2><span class="h-num">19</span>Preview in context — Mobile &amp; Desktop frames</h2>
-        <p class="intro">
-          Last visual check before the project is signed off. The Figma file ships
-          with four context mockups — two mobile, two desktop — that show the popup
-          inside real brand chrome. They're already wired up to the master
-          component, so once your popup is finalised, all four update automatically.
-        </p>
+        <p class="intro">Last visual check before sign-off. Four context mockups — two mobile, two desktop — show the popup inside real brand chrome. Pre-wired to the master component.</p>
 
-        <div class="callout callout-info">
-          <p><strong>Pre-wired, not manual.</strong> Each of the four mockup frames already contains an <em>instance</em> of the master <code>Questline: ML SuperBowl</code> component. Finish the popup once → all four mockups reflect the change. No copy-paste per frame.</p>
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>Pre-wired, not manual.</strong> Each frame contains an <em>instance</em> of the master component. Finish the popup once → all four update.</li>
+            <li><strong>Four frames:</strong> mobile default, mobile info-open, desktop default, desktop info-open.</li>
+            <li><strong>Why all four exist:</strong> 366×572 art can look fine in isolation but jarring in context — dimming, button overlap, tooltip clipping.</li>
+            <li><strong>Final stage only.</strong> Don't tweak preview frames mid-design. Stakeholders see these, not the bare art.</li>
+          </ul>
         </div>
-
-        <h3 style="margin-top: 28px;">The four context frames</h3>
 
         <!-- Row 1 — mobiles (portrait, narrow) -->
         <div style="display: flex; gap: 24px; justify-content: flex-start; flex-wrap: wrap; margin: 18px 0 22px;">
           <figure style="margin: 0; flex: 0 0 220px;">
             <img decoding="async" loading="lazy" src="assets/figma/Mobile.png" alt="Mobile preview — default popup state" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-1);">
-            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--text-2);">Mobile · default</strong> — popup with the <code>i</code> info button collapsed.</figcaption>
+            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--text-2);">Mobile · default</strong> — info button collapsed.</figcaption>
           </figure>
           <figure style="margin: 0; flex: 0 0 220px;">
             <img decoding="async" loading="lazy" src="assets/figma/Mobile.png" alt="Mobile preview — info tooltip open (use Mobile-1.png when added)" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-1); opacity: 0.55;">
-            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--text-2);">Mobile · info-open</strong> — same popup with the <em>"How does it work?"</em> tooltip visible. <span style="color: var(--accent);">[drop Mobile-1.png]</span></figcaption>
+            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--text-2);">Mobile · info-open</strong> — tooltip visible. <span style="color: var(--accent);">[drop Mobile-1.png]</span></figcaption>
           </figure>
         </div>
 
@@ -4389,34 +4607,35 @@
         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin: 0 0 22px;">
           <figure style="margin: 0;">
             <img decoding="async" loading="lazy" src="assets/figma/Desktop.png" alt="Desktop preview — default popup state" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-1);">
-            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--text-2);">Desktop · default</strong> — popup overlaying the casino lobby with sidebar nav and game tiles dimmed behind.</figcaption>
+            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--text-2);">Desktop · default</strong> — overlaying the casino lobby with sidebar nav.</figcaption>
           </figure>
           <figure style="margin: 0;">
             <img decoding="async" loading="lazy" src="assets/figma/Desktop-1.png" alt="Desktop preview — info tooltip open" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-1);">
-            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--text-2);">Desktop · info-open</strong> — same lobby with the <em>"How does it work?"</em> tooltip expanded.</figcaption>
+            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--text-2);">Desktop · info-open</strong> — tooltip expanded.</figcaption>
           </figure>
         </div>
 
-        <h3 style="margin-top: 28px;">Why all four exist</h3>
-        <p>The 366×572 artwork can look perfect in isolation but jarring in real context — wrong dimming, button overlapping native UI, info-tooltip clipping the lobby header. The four mockups are your last visual catch before stakeholder review.</p>
+        <details class="deep">
+          <summary>Manual fallback — when the binding breaks <span class="deep-tag">repair</span></summary>
+          <div class="deep-body">
+            <p>If for some reason a mockup loses its instance link, you can rebind manually. Inside the <strong>first Mobile preview frame</strong> (the default-state one), the layer hierarchy is:</p>
+            <figure style="margin: 14px 0; max-width: 560px;">
+              <img decoding="async" loading="lazy" src="assets/figma/Popup-Section.png" alt="Figma layer panel — Popup → Section → Questline: ML SuperBowl" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-1);">
+              <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Layer panel: <code>Popup</code> (frame) → <code>Section</code> (Auto Layout) → <code>Questline: ML SuperBowl</code> (instance).</figcaption>
+            </figure>
+            <ol>
+              <li>Open the master component <code>Questline: ML SuperBowl</code> on the same page.</li>
+              <li>Right-click → <strong>Copy as instance</strong>.</li>
+              <li>Open the first Mobile preview frame, drill into <code>Popup → Section</code>, paste the instance there (replace the existing one).</li>
+              <li>The other three frames inherit through their own instance reference — no separate edit needed.</li>
+            </ol>
+          </div>
+        </details>
 
-        <h3 style="margin-top: 28px;">Manual fallback — when the binding breaks</h3>
-        <p>If for some reason a mockup loses its instance link, you can rebind manually. Inside the <strong>first Mobile preview frame</strong> (the default-state one), the layer hierarchy is:</p>
-
-        <figure style="margin: 14px 0; max-width: 560px;">
-          <img decoding="async" loading="lazy" src="assets/figma/Popup-Section.png" alt="Figma layer panel — Popup → Section → Questline: ML SuperBowl" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-1);">
-          <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Layer panel: <code>Popup</code> (frame) → <code>Section</code> (Auto Layout) → <code>Questline: ML SuperBowl</code> (instance).</figcaption>
-        </figure>
-
-        <ol>
-          <li>Open the master component <code>Questline: ML SuperBowl</code> on the same page.</li>
-          <li>Right-click → <strong>Copy as instance</strong>.</li>
-          <li>Open the first Mobile preview frame, drill into <code>Popup → Section</code>, paste the instance there (replace the existing one).</li>
-          <li>The other three frames (mobile-info, desktop-default, desktop-info) inherit through their own instance reference — no separate edit needed.</li>
-        </ol>
-
-        <div class="callout callout-tip">
-          <p><strong>Final stage only.</strong> Don't spend time tweaking the preview frames mid-design. They're meant for the very last check, after the popup itself is signed off. Stakeholders see these, not the bare 366×572 art.</p>
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#preview" data-page="ship-it">23 Web Preview</a>
+          <a href="#sync-back" data-page="ship-it">26 Sync project ⇄ test</a>
         </div>
       </section>
 
@@ -4425,11 +4644,17 @@
       <section id="workflow">
         <span class="section-label">20 — Workflow</span>
         <h2><span class="h-num">20</span>The two-pass export workflow</h2>
-        <p class="intro">
-          Real-world export isn't one shot. It's <strong>iterate fast → finalise slow</strong>.
-          Many designers blur these into one and waste 4× the time on every test cycle.
-          Don't.
-        </p>
+        <p class="intro">Real-world export isn't one shot. <strong>Iterate fast → finalise slow.</strong> Many designers blur the two passes and waste 4× the time on every test cycle.</p>
+
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>Test pass = 1× / 250 ms.</strong> Quick scans (~30 s) — for fixing layer names, swapping art, eyeballing layout.</li>
+            <li><strong>Final pass = 4× / 1000 ms.</strong> Slow scan (~90 s) — only when design is signed off.</li>
+            <li><strong>Always WebP.</strong> Quality 100, Compression Method 3.</li>
+            <li><strong>Why two passes:</strong> running 4× from the start = 90 s wait per iteration. With two passes you iterate at 30 s, pay the 90 s cost exactly once.</li>
+          </ul>
+        </div>
 
         <div class="steps">
 
@@ -4600,8 +4825,11 @@
           </div>
         </div>
 
-        <div class="callout callout-tip">
-          <p><strong>Why two passes?</strong> 1× scans take 30 seconds, 4× scans take 90+. If you ran 4× from the start, every iteration would cost you 90s of waiting. With two passes, you iterate at 30s per loop, then pay the 90s cost exactly once at the end.</p>
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#plugin-settings" data-page="the-plugin">09 Settings — the two values</a>
+          <a href="#mistakes" data-page="rules-workflow">21 Common mistakes</a>
+          <a href="#export" data-page="ship-it">22 ZIP &amp; naming</a>
         </div>
       </section>
 
@@ -4609,6 +4837,17 @@
       <section id="mistakes">
         <span class="section-label">21 — Pitfalls</span>
         <h2><span class="h-num">21</span>Mistakes the plugin will catch (and a few it won't)</h2>
+        <p class="intro">Two flavours: <strong>Validation Fail</strong> (plugin blocks export) and <strong>Silent Bug</strong> (plugin says fine, popup ships broken). The catalogue below covers both.</p>
+
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>Edit at source, not on the mockup.</strong> Resize the source Component Set — instances follow. Resize an instance directly = validation fail.</li>
+            <li><strong>Names are reserved.</strong> Don't rename <code>Visuals</code> or <code>Properties</code>. Don't share <code>questKey</code> between two quests.</li>
+            <li><strong>Decimal positions = silent drift.</strong> Turn on Snap to Pixel Grid (<span class="kbd">⇧ ⌘ '</span>) before final export.</li>
+            <li><strong>If a file is endlessly broken — start over.</strong> Duplicate the last clean shipped theme, redo the swap. Often 2× faster than chasing layered breakage.</li>
+          </ul>
+        </div>
 
         <div class="mistakes-grid">
           <div class="mistake">
@@ -4696,6 +4935,13 @@
             <div class="fix">Always switch to 1000ms / 4× before the final Scan + Export. No exceptions.</div>
           </div>
         </div>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#naming" data-page="rules-workflow">17 Layer naming</a>
+          <a href="#visuals" data-page="rules-workflow">18 Visuals rule</a>
+          <a href="#workflow" data-page="rules-workflow">20 Two-pass workflow</a>
+        </div>
       </section>
 
       </div><!-- /page rules -->
@@ -4719,28 +4965,37 @@
       <section id="segmentation">
         <span class="section-label">27 — After export</span>
         <h2><span class="h-num">27</span>Segmentation — building reward instances per tier</h2>
-        <p class="intro">
-          The questline ZIP gives you the <em>theme</em>. But the same theme ships to multiple
-          user segments (VIP, High, Medium, Low) — each with its own reward values. So after
-          export, the designer goes back to Figma and builds a <strong>family of reward
-          instances</strong> next to the main components panel — one per segment.
-        </p>
+        <p class="intro">The questline ZIP gives you the <em>theme</em>. The same theme ships to multiple user segments (VIP / High / Medium / Low) — each with its own reward values. After export, build a family of reward instances on the Figma canvas, one per segment.</p>
 
-        <h3>The mechanic</h3>
-        <ol>
-          <li>Take the <code>rewards</code> Component Set's <code>State=active</code>.</li>
-          <li>Make an instance of it. Place it on the canvas to the right of the components frame.</li>
-          <li>Update the four reward icons inside Visuals: <strong>GC amount</strong>,
-            <strong>Free SC</strong>, <strong>Free Spins (count + SC value each)</strong>,
-            and toggle the <strong>Wheel variant</strong> (Gold / Silver / Bronze) for MAX PRIZE.</li>
-          <li>Duplicate that instance for every segment in the brief.</li>
-          <li>Name each instance <code>VIP 1.1</code>, <code>VIP 1.2</code>, <code>HIGH 1.1</code>…<code>HIGH 1.7</code>, <code>MEDIUM 2.1</code>…<code>MEDIUM 2.7</code>, <code>LOW 3.1</code> — exactly matching the spec sheet.</li>
-        </ol>
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>Source of truth = product's Excel sheet.</strong> Columns: GC · SC · FS · FS Value · RR · Wheel. Don't improvise — these drive real money payouts.</li>
+            <li><strong>One instance per segment.</strong> Duplicate <code>rewards / State=active</code>, swap values, toggle Wheel variant.</li>
+            <li><strong>Naming matches the spec exactly:</strong> <code>VIP 1.1</code>, <code>HIGH 1.1…1.7</code>, <code>MEDIUM 2.1…2.7</code>, <code>LOW 3.1</code>.</li>
+            <li><strong>Wheel variant toggles do the heavy lifting.</strong> One click swaps Gold/Silver/Bronze art — that's why Wheel is a Component Set.</li>
+          </ul>
+        </div>
 
-        <h3>The data comes from product as an Excel sheet</h3>
-        <p>Product sends a spec sheet (Google Sheet / Excel) — one row per segment, columns:
-        <code>GC</code>, <code>SC</code>, <code>FS</code>, <code>FS Value</code>, <code>RR</code>, <code>Wheel Name</code>.
-        The designer copies values straight into Figma. Don't improvise — this drives real money payouts.</p>
+        <details class="deep">
+          <summary>The mechanic — five steps <span class="deep-tag">workflow</span></summary>
+          <div class="deep-body">
+            <ol>
+              <li>Take the <code>rewards</code> Component Set's <code>State=active</code>.</li>
+              <li>Make an instance of it. Place it on the canvas to the right of the components frame.</li>
+              <li>Update the four reward icons inside Visuals: <strong>GC amount</strong>, <strong>Free SC</strong>, <strong>Free Spins (count + SC value each)</strong>, and toggle the <strong>Wheel variant</strong> (Gold / Silver / Bronze) for MAX PRIZE.</li>
+              <li>Duplicate that instance for every segment in the brief.</li>
+              <li>Name each instance <code>VIP 1.1</code>, <code>VIP 1.2</code>, <code>HIGH 1.1</code>…<code>HIGH 1.7</code>, <code>MEDIUM 2.1</code>…<code>MEDIUM 2.7</code>, <code>LOW 3.1</code> — exactly matching the spec sheet.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="deep">
+          <summary>The Excel spec sheet — what product sends <span class="deep-tag">data</span></summary>
+          <div class="deep-body">
+            <p>Product sends a spec sheet (Google Sheet / Excel) — one row per segment, columns: <code>GC</code>, <code>SC</code>, <code>FS</code>, <code>FS Value</code>, <code>RR</code>, <code>Wheel Name</code>. Designer copies values straight into Figma. <strong>The values are real money — treat the sheet as ground truth. Don't round, don't estimate. If a value seems off, ask product before changing.</strong></p>
+          </div>
+        </details>
 
         <div class="excel-mock">
           <div class="row section"><div>VIP 5,6</div></div>
@@ -4793,12 +5048,10 @@
           </div>
         </div>
 
-        <div class="callout callout-tip">
-          <p><strong>Why Wheel as a variant matters.</strong> Without it, the designer would manually swap the bronze/silver/gold artwork in every reward instance. With it, the toggle is one click on the variant property. <em>This is the whole point of the Wheel Component Set.</em></p>
-        </div>
-
-        <div class="callout callout-warn">
-          <p><strong>The values are real money.</strong> Treat the Excel sheet as ground truth. Don't round, don't estimate. Copy exactly. If a value seems off, ask product before changing — you might break a campaign.</p>
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#wheel" data-page="components">16 Wheel component</a>
+          <a href="#brands" data-page="after-export">28 Four brands</a>
         </div>
       </section>
 
@@ -4806,12 +5059,17 @@
       <section id="brands">
         <span class="section-label">28 — Per-brand</span>
         <h2><span class="h-num">28</span>The same questline, four brands</h2>
-        <p class="intro">
-          B2Spin ships Collectables popups across <strong>four brands</strong>. Each has
-          its own visual identity — character, button colour, wheel art, header logo. The
-          Theme Exporter pipeline is identical; only the artwork inside <code>Visuals</code>
-          differs.
-        </p>
+        <p class="intro">B2Spin ships Collectables popups across four brands. Each has its own visual identity — character, button colour, wheel art, header logo. Pipeline is identical; only the art inside <code>Visuals</code> differs.</p>
+
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>Pipeline doesn't change.</strong> Plugin, components, Component Sets — all identical across brands.</li>
+            <li><strong>What changes:</strong> art inside every <code>Visuals</code> group + <code>button</code> + <code>timer</code> from that brand's UIKit.</li>
+            <li><strong>Wheel art is per-brand too.</strong> McLuck's gold wheel ≠ HM's gold wheel. Always pull from the brand's UIKit.</li>
+            <li><strong>Starting a new brand:</strong> copy the previous brand's Component Sets as baseline, swap art, refresh button + timer.</li>
+          </ul>
+        </div>
 
         <div class="brand-grid">
           <div class="brand-chip mc">
@@ -4832,10 +5090,24 @@
           </div>
         </div>
 
-        <p>Practically: when you start a new questline for a different brand, copy the previous brand's <code>Component Set</code>s as a baseline, then replace artwork inside every <code>Visuals</code> group, and refresh the <code>button</code> + <code>timer</code> from that brand's UIKit.</p>
+        <details class="deep">
+          <summary>Starting a new brand — practical steps <span class="deep-tag">workflow</span></summary>
+          <div class="deep-body">
+            <p>When you start a new questline for a different brand:</p>
+            <ol>
+              <li>Copy the previous brand's <code>Component Set</code>s as a baseline (whole section).</li>
+              <li>Replace artwork inside every <code>Visuals</code> group — character, background, decorative icons.</li>
+              <li>Refresh the <code>button</code> from the new brand's UIKit (don't recolour the old one — copy it fresh).</li>
+              <li>Refresh the <code>timer</code> from the same UIKit.</li>
+              <li>Pull the brand's <code>Wheel</code> Gold/Silver/Bronze art into the rewards Component Set.</li>
+            </ol>
+          </div>
+        </details>
 
-        <div class="callout callout-info">
-          <p><strong>Wheel art is per-brand too.</strong> McLuck's gold wheel ≠ Hello Millions' gold wheel. Always pull the brand's wheel from its UIKit; don't reuse another brand's.</p>
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#segmentation" data-page="after-export">27 Segmentation</a>
+          <a href="#plugin-open" data-page="the-plugin">05 Per-brand boards</a>
         </div>
       </section>
 
@@ -4860,13 +5132,18 @@
       <section id="export">
         <span class="section-label">22 — Output</span>
         <h2><span class="h-num">22</span>The ZIP, named the right way</h2>
-        <p class="intro">
-          Successful export drops a single ZIP — 28 WebP renders + 2 JSON files.
-          The filename matters: Operations sorts incoming work by name and ML conventions
-          are baked in.
-        </p>
+        <p class="intro">Successful export drops a single ZIP — 28 WebP renders + 2 JSON files. Filename matters: Operations sorts incoming work by name and ML conventions are baked in.</p>
 
-        <h3>Naming convention</h3>
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>Convention is mandatory.</strong> <code>BRAND - Collectible Monetization - Type - ThemeName - DD.MM.YYYY.zip</code>.</li>
+            <li><strong>Brand prefixes:</strong> <code>ML</code> McLuck · <code>HM</code> Hello Millions · <code>SB</code> Spin Blitz · <code>PF</code> Playfame.</li>
+            <li><strong>Theme name is CamelCase or hyphenated.</strong> No spaces inside the theme token.</li>
+            <li><strong>Date in DD.MM.YYYY with dots.</strong> Not slashes. Not US format.</li>
+          </ul>
+        </div>
+
         <div class="filename-builder">
           <div class="fn-result">
             <span class="fn-piece brand">ML</span><span class="fn-piece sep"> - </span><span class="fn-piece type">Collectible Monetization - Questline</span><span class="fn-piece sep"> - </span><span class="fn-piece theme">SuperBowl</span><span class="fn-piece sep"> - </span><span class="fn-piece date">02.05.2026</span><span class="fn-piece ext">.zip</span>
@@ -4891,9 +5168,11 @@
           </div>
         </div>
 
-        <h3>What's inside the ZIP</h3>
-        <div class="zip-explorer">
-          <div class="zip-tree">
+        <details class="deep">
+          <summary>What's inside the ZIP <span class="deep-tag">contents</span></summary>
+          <div class="deep-body">
+            <div class="zip-explorer">
+              <div class="zip-tree">
 <span class="ftxt">📦</span> <span class="fname">ML - Collectible Monetization - Questline - SuperBowl - 02.05.2026.zip</span>
 <span class="ftxt">├──</span> <span class="fwebp">background.webp</span><span class="fcomment"># 366×572</span>
 <span class="ftxt">├──</span> <span class="fwebp">header_active.webp</span>
@@ -4910,14 +5189,28 @@
 <span class="ftxt">├──</span> <span class="ftxt">…</span> <span class="fcomment"># quest2…quest5, same pattern</span>
 <span class="ftxt">├──</span> <span class="fjson">positions.json</span><span class="fcomment"># layout coords + style</span>
 <span class="ftxt">└──</span> <span class="fjson">positions_full.json</span><span class="fcomment"># extended metadata</span>
+              </div>
+              <div>
+                <h4 style="margin-top: 0;">Why this format</h4>
+                <p>WebP gives high quality at small file size — popups need to load fast. Each component exports separately so the runtime can layer + animate them independently (e.g. fade a quest from <code>active</code> to <code>completed</code> on click).</p>
+                <p><code>positions.json</code> tells the web runtime where each piece sits inside the 366×572 canvas, plus per-state styling for live elements (button colours, timer fill).</p>
+              </div>
+            </div>
           </div>
-          <div>
-            <h3 style="margin-top: 0;">Why this format</h3>
-            <p>WebP gives high quality at small file size — popups need to load fast. Each component exports separately so the runtime can layer + animate them independently (e.g. fade a quest from <code>active</code> to <code>completed</code> on click).</p>
-            <p><code>positions.json</code> tells the web runtime where each piece sits inside the 366×572 canvas, plus per-state styling for live elements (button colours, timer fill).</p>
-            <h4>Handoff</h4>
-            <p>Local save → rename per convention → Google Drive → ping Operations channel.</p>
+        </details>
+
+        <details class="deep">
+          <summary>Handoff sequence at a glance <span class="deep-tag">workflow</span></summary>
+          <div class="deep-body">
+            <p>Local save (right name) → Web Preview the ZIP → Google Drive (right folder) → paste link into Monday.com ticket → tag reviewer.</p>
+            <p>Each step has a dedicated section: <a href="#preview" data-page="ship-it">23 Web Preview</a>, <a href="#drive" data-page="ship-it">24 Google Drive</a>, <a href="#monday" data-page="ship-it">25 Monday.com handoff</a>.</p>
           </div>
+        </details>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#preview" data-page="ship-it">23 Web Preview</a>
+          <a href="#drive" data-page="ship-it">24 Google Drive</a>
         </div>
       </section>
 
@@ -4925,15 +5218,36 @@
       <section id="preview">
         <span class="section-label">23 — QA</span>
         <h2><span class="h-num">23</span>Web Preview — final test before handoff</h2>
-        <p class="intro">
-          A separate sidebar tool launched from the plugin's <strong>Web Preview</strong>
-          button. Loads your ZIP, plays reveal animation, lets you click through quest
-          states. Exactly how it'll look in production.
-        </p>
+        <p class="intro">A separate sidebar tool launched from the plugin's <strong>Web Preview</strong> button. Loads your ZIP, plays reveal animation, lets you click through quest states — exactly how it'll look in production.</p>
 
-        <div class="two-col">
-          <div>
-            <h3 style="margin-top: 0;">What's in the sidebar</h3>
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>Run AFTER Export, BEFORE Drive.</strong> Catches breaks before the ZIP enters the handoff chain.</li>
+            <li><strong>Click every quest.</strong> Cycles Locked → Active → Unclaimed → Completed; header/rewards/button update with progress.</li>
+            <li><strong>Test responsive sizing.</strong> Width/Height sliders. Default 366 × 572.</li>
+            <li><strong>Same rhythm for Chain Offer and Wheel.</strong> Different components, same workflow. Lottery isn't used yet.</li>
+          </ul>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0;">
+          <figure style="margin: 0;">
+            <img decoding="async" loading="lazy" src="assets/plugin/web-preview-empty.png" alt="Web Preview button on Scan tab" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--accent);">①</strong> On the Scan tab, click <strong>Web Preview</strong>.</figcaption>
+          </figure>
+          <figure style="margin: 0;">
+            <img decoding="async" loading="lazy" src="assets/plugin/web-preview-loaded.png" alt="Vercel Web Preview tool — empty, choose ZIP" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--accent);">②</strong> Vercel page opens. <strong>Choose ZIP File</strong>.</figcaption>
+          </figure>
+          <figure style="margin: 0;">
+            <img decoding="async" loading="lazy" src="assets/plugin/web-preview-state-2.png" alt="Web Preview — popup loaded and interactive" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--green);">③</strong> Popup loads, fully interactive. Click quests, watch animation.</figcaption>
+          </figure>
+        </div>
+
+        <details class="deep">
+          <summary>Sidebar controls — full reference <span class="deep-tag">reference</span></summary>
+          <div class="deep-body">
             <ul>
               <li><strong>Choose ZIP File</strong> — pick the export you just built.</li>
               <li><strong>Questline Settings</strong> — Width / Height sliders. For SuperBowl: 366 × 572.</li>
@@ -4944,8 +5258,11 @@
               <li><strong>Questline Information</strong> — parsed metadata (ID, dimensions). Sanity-check the ID matches your filename.</li>
             </ul>
           </div>
-          <div>
-            <h3 style="margin-top: 0;">Interactive in the canvas</h3>
+        </details>
+
+        <details class="deep">
+          <summary>Interactive canvas — what to click <span class="deep-tag">QA loop</span></summary>
+          <div class="deep-body">
             <ul>
               <li>Each quest icon clickable — cycles Locked → Active → Unclaimed → Completed.</li>
               <li>Hover shows tooltip: <code>quest3 (unclaimed) – Click to cycle states</code>.</li>
@@ -4953,48 +5270,39 @@
               <li>Play icon replays the reveal animation.</li>
               <li>Width/Height sliders test responsive sizing.</li>
             </ul>
-            <h4>Tested OK? Ship it.</h4>
-            <p>Save ZIP locally with the right name → Google Drive → Operations.</p>
+            <p style="margin-top: 12px;"><strong>Order matters.</strong> Settings final → Scan Selection → Preview re-check → Export as WebP → ZIP downloads → <em>Web Preview the ZIP locally</em> → only then upload to Drive. If anything breaks in Web Preview, fix in Figma and re-export — don't push a broken ZIP into Drive.</p>
           </div>
+        </details>
+
+        <details class="deep">
+          <summary>Launch URL <span class="deep-tag">reference</span></summary>
+          <div class="deep-body">
+            <p>Plugin button opens: <a href="https://questline-exporter-test.vercel.app/" target="_blank" style="color: var(--text);">questline-exporter-test.vercel.app</a>. Same URL whether you're testing Questline, Chain Offer, or Wheel — the tool detects the bundle type from the ZIP.</p>
+          </div>
+        </details>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#preview-context" data-page="rules-workflow">19 Preview in context</a>
+          <a href="#drive" data-page="ship-it">24 Google Drive</a>
         </div>
-
-        <h3 style="margin-top: 32px;">How to launch Web Preview</h3>
-        <p>From the plugin's <strong>Scan</strong> tab, click the <strong>Web Preview</strong> button (top-right of the action row). It opens this URL in your browser: <a href="https://questline-exporter-test.vercel.app/" target="_blank" style="color: var(--text);">questline-exporter-test.vercel.app</a></p>
-
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 18px 0;">
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/web-preview-empty.png" alt="Web Preview button on Scan tab" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--accent);">①</strong> On the Scan tab, click <strong>Web Preview</strong>.</figcaption>
-          </figure>
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/web-preview-loaded.png" alt="Vercel Web Preview tool — empty, choose ZIP" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--accent);">②</strong> Vercel page opens. Click <strong>Choose ZIP File</strong> and pick the export you just made.</figcaption>
-          </figure>
-          <figure style="margin: 0;">
-            <img decoding="async" loading="lazy" src="assets/plugin/web-preview-state-2.png" alt="Web Preview — popup loaded and interactive" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-            <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;"><strong style="color: var(--green);">③</strong> Popup loads, fully interactive. Click quests to cycle states. Sidebar on the left has Width / Height sliders, Show Quest Keys toggle, Reveal Animation tuning, and parsed Questline Information.</figcaption>
-          </figure>
-        </div>
-
-        <div class="callout callout-key">
-          <p><strong>Run Web Preview AFTER Export, BEFORE Drive upload.</strong> Order: Settings final → Scan Selection → Preview re-check → Export as WebP → ZIP downloads to your computer → <em>Web Preview the ZIP locally first</em> → only then upload to Google Drive. If anything breaks in Web Preview, you fix in Figma and re-export — don't push a broken ZIP into Drive.</p>
-        </div>
-
-        <div class="callout callout-tip">
-          <p><strong>Same workflow applies to Chain Offer and Wheel (plugin tabs).</strong> Different components per type, same rhythm: select frame → Validate → test pass (1× / 250ms) → iterate → final pass (4× / 1000ms) → Export as WebP → Web Preview → handoff. Lottery isn't used yet.</p>
-        </div>
-
       </section>
 
       <!-- ═══ GOOGLE DRIVE ═══ -->
       <section id="drive">
         <span class="section-label">24 — Storage</span>
         <h2><span class="h-num">24</span>Google Drive — where the ZIP lives</h2>
-        <p class="intro">
-          After local save, upload the ZIP into the team's shared Google Drive. The
-          path is fixed — same folder pattern every time, regardless of brand or
-          campaign type.
-        </p>
+        <p class="intro">After local save, upload the ZIP into the team's shared Google Drive. Path is fixed — same folder pattern every time.</p>
+
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>Path:</strong> retention all → 01 Content and Design → CND Design Team → Monetization Assets → [Brand] → [Campaign type].</li>
+            <li><strong>Brand folders:</strong> ML / HM / SB / PF. <strong>Campaign type:</strong> Questlines / Chain Offers / Wheels.</li>
+            <li><strong>Match existing structure.</strong> If a brand folder looks different, don't invent — copy the convention already in use.</li>
+            <li><strong>Permissions stay Restricted.</strong> Never change to "Anyone with the link" without explicit op request — Drive is internal.</li>
+          </ul>
+        </div>
 
         <div style="background: var(--bg-1); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 22px 24px; margin: 18px 0; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 2; color: var(--text-2);">
           <div><span style="color: var(--text-3);">📁</span> <span style="color: var(--text);">retention all</span></div>
@@ -5006,23 +5314,33 @@
           <div style="padding-left: 132px;"><span style="color: var(--text-3);">└─ 📦</span> <span style="color: var(--text);">your-export.zip</span></div>
         </div>
 
-        <p>If a campaign-type folder doesn't exist yet for this brand, create it. If a brand folder structure looks different from this — match what's already there, don't invent.</p>
+        <details class="deep">
+          <summary>Drive path screenshot — what it looks like in Drive <span class="deep-tag">visual</span></summary>
+          <div class="deep-body">
+            <p>If a campaign-type folder doesn't exist yet for this brand, create it. If a brand folder structure looks different — match what's already there, don't invent.</p>
+            <figure style="margin: 14px 0;">
+              <img decoding="async" loading="lazy" src="assets/plugin/drive-folder-tree.png" alt="Drive folder tree" style="width: 100%; max-width: 900px; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+              <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">The full Drive path with breadcrumb visible — drag-and-drop your ZIP here.</figcaption>
+            </figure>
+          </div>
+        </details>
 
-        <figure style="margin: 14px 0;">
-          <img decoding="async" loading="lazy" src="assets/plugin/drive-folder-tree.png" alt="Drive folder tree — retention all → 01 Content and Design → CND Design Team → Monetization Assets → ML → Questlines" style="width: 100%; max-width: 900px; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-          <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">The full Drive path with the breadcrumb visible — drag-and-drop your ZIP in here.</figcaption>
-        </figure>
+        <details class="deep">
+          <summary>Get the share link — three-dot menu <span class="deep-tag">step · 15 s</span></summary>
+          <div class="deep-body">
+            <p>Once the ZIP is uploaded, right-click it (or click the three vertical dots on the right side of the row) → <strong>Share</strong> → <strong>Copy link</strong>. Keep the default <em>Restricted</em> permission.</p>
+            <figure style="margin: 14px 0; max-width: 720px;">
+              <img decoding="async" loading="lazy" src="assets/plugin/drive-share-link.png" alt="Drive — share menu with Copy link" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
+              <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Three-dot menu → Share → Copy link. Paste into Monday.com next.</figcaption>
+            </figure>
+            <p style="margin-top: 8px;"><strong>Don't open up permissions.</strong> "Anyone with the link" leaks unreleased campaigns. Operators have access already.</p>
+          </div>
+        </details>
 
-        <h3 style="margin-top: 28px;">Get the share link</h3>
-        <p>Once the ZIP is uploaded, right-click it (or click the three vertical dots on the right side of the row) → <strong>Share</strong> → <strong>Copy link</strong>. Keep the default <em>Restricted</em> permission — don't change to "Anyone with the link".</p>
-
-        <figure style="margin: 14px 0; max-width: 720px;">
-          <img decoding="async" loading="lazy" src="assets/plugin/drive-share-link.png" alt="Drive — share menu with Copy link" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-          <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Three-dot menu → <strong>Share</strong> → <strong>Copy link</strong>. Paste into Monday.com on the next step.</figcaption>
-        </figure>
-
-        <div class="callout callout-warn">
-          <p><strong>Share-link permissions stay Restricted by default.</strong> Don't change to "Anyone with the link" unless an op explicitly asks. The Drive is internal — accidental public sharing leaks unreleased campaigns.</p>
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#export" data-page="ship-it">22 Naming convention</a>
+          <a href="#monday" data-page="ship-it">25 Monday.com handoff</a>
         </div>
       </section>
 
@@ -5030,26 +5348,39 @@
       <section id="monday">
         <span class="section-label">25 — Handoff</span>
         <h2><span class="h-num">25</span>Monday.com — routing the link to the right people</h2>
-        <p class="intro">
-          The ZIP doesn't go to Operations via Slack. The handoff is via Monday.com
-          on the campaign ticket. This is the contract — once the ticket is updated
-          and reviewers are tagged, trade marketing picks it up.
-        </p>
+        <p class="intro">The ZIP doesn't go to Operations via Slack. Handoff is via Monday.com on the campaign ticket — that's the contract.</p>
 
-        <h3>The three steps</h3>
-        <ol>
-          <li>Open the campaign <strong>ticket</strong> on Monday.com (the ticket row for the current campaign).</li>
-          <li>Find the column labelled <strong>Figma Link</strong> (sometimes "Assets" depending on board) and paste the Drive share-link of your ZIP into that cell.</li>
-          <li>Add a comment on the ticket mentioning <strong>@Allison</strong>, <strong>@Natalie</strong>, or <strong>@Noel</strong> (the trade-marketing reviewers) so they get notified.</li>
-        </ol>
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>Three steps:</strong> open ticket → paste link in Figma Link column → tag reviewer in a comment.</li>
+            <li><strong>Reviewers:</strong> @Allison, @Natalie, or @Noel (trade marketing).</li>
+            <li><strong>Column name varies.</strong> Sometimes "Figma Link", sometimes "Assets" — same column.</li>
+            <li><strong>No Slack, no email.</strong> The Monday tag is the only handoff signal — that's how trade marketing knows it's their turn.</li>
+          </ul>
+        </div>
 
         <figure style="margin: 18px 0; max-width: 900px;">
           <img decoding="async" loading="lazy" src="assets/plugin/web-preview-button.png" alt="Monday.com ticket row — paste Drive link into Figma Link column" style="width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 8px;">
-          <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Ticket row on Monday.com — paste the Drive share-link into the <strong>Figma Link</strong> column (highlighted), then tag a reviewer in a comment.</figcaption>
+          <figcaption style="font-size: 12px; color: var(--text-3); margin-top: 8px;">Ticket row on Monday.com — paste Drive share-link into the <strong>Figma Link</strong> column, then tag a reviewer in a comment.</figcaption>
         </figure>
 
-        <div class="callout callout-tip">
-          <p><strong>That's the whole handoff.</strong> Once tagged on Monday.com, trade marketing picks it up, runs it through Retool, and ships to the brand site. You don't ping Slack, you don't email — Monday.com tag is the contract.</p>
+        <details class="deep">
+          <summary>The three steps in detail <span class="deep-tag">workflow</span></summary>
+          <div class="deep-body">
+            <ol>
+              <li>Open the campaign <strong>ticket</strong> on Monday.com (the ticket row for the current campaign).</li>
+              <li>Find the column labelled <strong>Figma Link</strong> (sometimes "Assets" depending on board) and paste the Drive share-link of your ZIP into that cell.</li>
+              <li>Add a comment mentioning <strong>@Allison</strong>, <strong>@Natalie</strong>, or <strong>@Noel</strong> so they get notified.</li>
+            </ol>
+            <p style="margin-top: 12px;">Once tagged, trade marketing picks it up, runs it through Retool, and ships to the brand site.</p>
+          </div>
+        </details>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#drive" data-page="ship-it">24 Google Drive</a>
+          <a href="#sync-back" data-page="ship-it">26 Sync project ⇄ test</a>
         </div>
       </section>
 
@@ -5058,32 +5389,42 @@
       <section id="sync-back">
         <span class="section-label">26 — Sync</span>
         <h2><span class="h-num">26</span>Sync the section back to your project board</h2>
-        <p class="intro">
-          The plugin runs only under <code>figma@patrianna.com</code>, so testing
-          and final ZIP export happen on the test page in that account. Once the
-          ZIP passes Web Preview and the four context frames look right, the entire
-          section needs to flow back to the original project board so both ends
-          stay in sync.
-        </p>
+        <p class="intro">Plugin runs only under <code>figma@patrianna.com</code>, so the final polished version lives on the Patrianna test page. After ZIP passes QA, the entire section flows back to the B2Spin project board so both ends stay in sync.</p>
 
-        <div class="callout callout-key">
-          <p><strong>What "the section" means here:</strong> the components, the assembled mockup, and the four context frames — everything you've been working on for this campaign. They live together as one block on the Figma page.</p>
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li><strong>"The section"</strong> = components + assembled mockup + four context frames. One block on the Figma page.</li>
+            <li><strong>Direction:</strong> Patrianna test page → B2Spin project board. Copy in Patrianna, paste over previous version in B2Spin.</li>
+            <li><strong>End state:</strong> both accounts hold identical copies. Neither is ahead.</li>
+            <li><strong>Skip this step</strong> = polished version stranded on the test page; project board carries the half-finished one.</li>
+          </ul>
         </div>
 
-        <h3 style="margin-top: 24px;">The flow</h3>
-        <ol>
-          <li>Designer designs and iterates on the project board (B2Spin account).</li>
-          <li>Switches to <code>figma@patrianna.com</code> to run the plugin → validates → exports ZIP → opens Web Preview → checks the four context mockups.</li>
-          <li>Test passes. <strong>Now copy the entire section back.</strong></li>
-          <li>Select the whole block on the Patrianna test page (components + mockup + 4 context frames) → copy.</li>
-          <li>Switch back to the B2Spin account, open the project board, paste over the previous version.</li>
-        </ol>
+        <details class="deep">
+          <summary>The full flow <span class="deep-tag">workflow</span></summary>
+          <div class="deep-body">
+            <ol>
+              <li>Designer designs and iterates on the project board (B2Spin account).</li>
+              <li>Switches to <code>figma@patrianna.com</code> to run the plugin → validates → exports ZIP → opens Web Preview → checks the four context mockups.</li>
+              <li>Test passes. <strong>Now copy the entire section back.</strong></li>
+              <li>Select the whole block on the Patrianna test page (components + mockup + 4 context frames) → copy.</li>
+              <li>Switch back to the B2Spin account, open the project board, paste over the previous version.</li>
+            </ol>
+          </div>
+        </details>
 
-        <h3 style="margin-top: 24px;">Why this matters</h3>
-        <p>Without this final sync, the project board ends up with the half-finished version while the polished, exportable version sits stranded on the Patrianna test page. Anyone picking up the campaign later — for revision, copy-edit, or a follow-up campaign — needs to find the latest on the project board.</p>
+        <details class="deep">
+          <summary>Why this matters — handoff to the next designer <span class="deep-tag">why</span></summary>
+          <div class="deep-body">
+            <p>Without this final sync, the project board ends up with the half-finished version while the polished, exportable version sits stranded on the Patrianna test page. Anyone picking up the campaign later — for revision, copy-edit, or a follow-up — needs to find the latest on the project board.</p>
+          </div>
+        </details>
 
-        <div class="callout callout-info">
-          <p><strong>End state:</strong> the project board (B2Spin) and the test page (Patrianna) hold identical copies of the section. Both are valid sources of truth; neither is ahead of the other.</p>
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#plugin-open" data-page="the-plugin">05 Two-account workflow</a>
+          <a href="#preview-context" data-page="rules-workflow">19 Preview in context</a>
         </div>
       </section>
 
@@ -5192,6 +5533,22 @@
 
             <article class="changelog-entry">
               <header class="changelog-head">
+                <span class="changelog-version">v1.4</span>
+                <span class="changelog-date">3 May 2026</span>
+                <span class="changelog-tag tag-minor">Minor</span>
+              </header>
+              <ul>
+                <li><strong>Notion-style simplify pass across all heavy sections.</strong> Same filter applied everywhere: lead sentence → <em>Key points</em> block (must-knows only) → hero visual → collapsible <code>&lt;details&gt;</code> toggles for the deep cuts → <em>See also</em> links at the end.</li>
+                <li>Sections refactored: <strong>Components</strong> (Quests, Background, Header, Rewards, Wheel, Button, Timer); <strong>Anatomy</strong> (Seven components, Component Sets, Approach A vs B); <strong>The Plugin</strong> (Opening it, Validate &amp; Scan, Preview, Export, Settings); <strong>Rules &amp; Workflow</strong> (Layer naming, Visuals rule, Preview in context, Two-pass workflow, Common mistakes); <strong>Ship It</strong> (ZIP &amp; naming, Web Preview, Google Drive, Monday handoff, Sync); <strong>After Export</strong> (Segmentation, Four brands).</li>
+                <li>No content removed — everything preserved, just folded into expandable toggles. The page now reads as a scannable spine; designers in a hurry get the gist, designers debugging dive into the toggles.</li>
+                <li>Each section now ends with <em>See also</em> deep-links to related sections — easier navigation between coupled topics (e.g. Visuals → Mistakes → Two-pass workflow).</li>
+                <li>Renamed every <em>TL;DR</em> label to <strong>Key points</strong> (the previous abbreviation confused non-native English readers).</li>
+                <li>Auto-image-optimization rule saved to memory: when new images are dropped into <code>assets/</code>, they get resized + compressed automatically (no manual <code>optimize-images.sh</code> run needed).</li>
+              </ul>
+            </article>
+
+            <article class="changelog-entry">
+              <header class="changelog-head">
                 <span class="changelog-version">v1.3</span>
                 <span class="changelog-date">5 May 2026</span>
                 <span class="changelog-tag tag-minor">Minor</span>
@@ -5295,7 +5652,7 @@
 <footer class="site-footer">
   <div class="site-footer-inner">
     <div class="meta-row">
-      <a href="#changelog" data-page="changelog" class="meta-pill meta-pill-link" title="View changelog">Guide <b>v1.3</b></a>
+      <a href="#changelog" data-page="changelog" class="meta-pill meta-pill-link" title="View changelog">Guide <b>v1.4</b></a>
       <span class="meta-pill">Updated <b>4 May 2026</b></span>
       <span class="meta-pill">Plugin <b>v1.7.6</b></span>
     </div>
