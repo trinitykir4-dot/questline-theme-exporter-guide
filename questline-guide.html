@@ -69,6 +69,8 @@
     z-index: 100;
     gap: 32px;
   }
+  /* Hamburger menu — hidden on desktop, shown via media query on mobile */
+  .menu-toggle { display: none; }
   .top-header .brand { display: flex; align-items: center; text-decoration: none; cursor: pointer; opacity: 1; transition: opacity .15s ease; }
   .top-header .brand:hover { opacity: 0.7; }
   .top-header .brand img { height: 36px; width: auto; display: block; }
@@ -1972,23 +1974,118 @@
     .comp-overview { grid-template-columns: repeat(4, 1fr); }
   }
   @media (max-width: 900px) {
-    .sidebar { transform: translateX(-100%); transition: transform 0.2s; }
-    .layout { padding-left: 0; }
-    .site-footer { padding-left: 24px; }
+    /* Header — slimmer on mobile, 4 columns: ☰ logo | nav | search/theme */
+    .top-header { padding: 0 10px; gap: 8px; grid-template-columns: auto auto 1fr auto; }
+    .top-header .brand img { height: 26px; }
+
+    /* Top nav — horizontally scrollable on mobile */
+    .top-nav { overflow-x: auto; justify-content: flex-start; gap: 2px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .top-nav::-webkit-scrollbar { display: none; }
+    .top-nav a { padding: 6px 10px; font-size: 12px; }
+    .top-nav .wip-badge { display: none; } /* save space */
+    .top-nav .nav-dropdown > a::after { display: none; } /* hide dropdown arrow on mobile */
+    .top-nav .dropdown-menu { display: none; } /* dropdowns don't work well on touch — hide */
+
+    /* Sidebar — slide-in drawer with backdrop */
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.25s ease;
+      width: 280px;
+      box-shadow: 8px 0 32px -8px rgba(0,0,0,0.6);
+      max-height: calc(100vh - var(--header-h));
+    }
+    body.sidebar-open .sidebar { transform: translateX(0); }
+    body.sidebar-open::after {
+      content: '';
+      position: fixed;
+      inset: var(--header-h) 0 36px 280px;
+      background: rgba(0,0,0,0.5);
+      z-index: 49;
+    }
+
+    /* Hamburger button */
+    .menu-toggle {
+      display: grid; place-items: center;
+      width: 32px; height: 32px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-2);
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    /* Layout — no sidebar offset on mobile */
+    .layout { padding-left: 0; padding-bottom: 36px; }
+    .site-footer { padding-left: 16px; padding-right: 16px; height: auto; min-height: 32px; }
+    .site-footer-inner { flex-direction: column; align-items: stretch; gap: 4px; }
+    .site-footer .copy { text-align: left; white-space: normal; }
+    .site-footer .meta-row { gap: 6px; }
+
+    /* Content padding tighter */
     main { margin-left: 0; width: 100%; }
-    .content-pad { padding: 32px 24px 28px; }
-    .topbar { padding: 12px 24px; }
-    .hero h1 { font-size: 36px; }
-    h2 { font-size: 28px; }
+    .content-pad { padding: 24px 18px 28px; }
+    .page-title-bar h1 { font-size: 22px; }
+
+    /* Headings & hero */
+    .landing-h1 { font-size: 36px; line-height: 1.1; }
+    .hero h1 { font-size: 30px; }
+    h2 { font-size: 24px; }
+    h2 .h-num { font-size: 18px; padding: 4px 10px; }
+    .section-label { font-size: 10.5px; }
+
+    /* Welcome — release the 100vh lock so the page can scroll on mobile */
+    body:has(.page[data-page="getting-started"].active) {
+      height: auto;
+      overflow: auto;
+    }
+    body:has(.page[data-page="getting-started"].active) .layout {
+      height: auto;
+      overflow: visible;
+      min-height: calc(100vh - var(--header-h) - 36px);
+    }
+    body:has(.page[data-page="getting-started"].active) main { height: auto; overflow: visible; }
+    body:has(.page[data-page="getting-started"].active) .page[data-page="getting-started"].active {
+      display: block;
+      height: auto;
+    }
+    body:has(.page[data-page="getting-started"].active) .content-pad {
+      height: auto;
+      padding: 18px 18px 28px;
+      display: block;
+    }
+    .landing-hero { grid-template-columns: 1fr !important; gap: 28px; }
+    .landing-right { display: none !important; } /* hide popup on mobile — too big to be useful */
+    main:has(.page[data-page="getting-started"].active)::before { display: none; } /* hide casino backdrop */
+    .approach-cards-row { grid-template-columns: 1fr; }
+    .approach-picker-section { padding: 24px 0 0; }
+
+    /* Type-cards image height on mobile */
+    .type-card-image { height: 240px; }
+
+    /* Hero map / overview map */
     .anatomy { grid-template-columns: 1fr; gap: 24px; padding: 24px; }
     .comp-overview { grid-template-columns: repeat(2, 1fr); }
     .mistakes-grid, .zip-explorer, .two-col, .settings-pair, .fn-legend, .stats-row { grid-template-columns: 1fr; }
+    .videos-grid { grid-template-columns: 1fr; }
+
+    /* Hide search trigger on very narrow */
+    .search-trigger { width: 28px; height: 28px; }
+    .theme-toggle { width: 28px; height: 28px; }
+    .theme-toggle svg, .search-trigger svg { width: 14px; height: 14px; }
+
+    /* Watch strips in pages — wrap nicely */
+    .watch-strip { flex-wrap: wrap; padding: 8px 12px; font-size: 12.5px; }
   }
 </style>
 </head>
 <body class="approach-b">
 
 <header class="top-header">
+  <button class="menu-toggle" id="menuToggle" type="button" aria-label="Toggle sidebar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
   <a class="brand" href="#getting-started" data-page="getting-started" aria-label="Go to Welcome">
     <img src="assets/Logo-b2Spin-large.png" alt="B2Spin">
   </a>
@@ -4736,6 +4833,29 @@ try {
   if (savedTheme === 'light' || savedTheme === 'dark') setTheme(savedTheme);
   else setTheme('dark');
 } catch (e) { setTheme('dark'); }
+
+// ─── Mobile sidebar toggle (hamburger) ───
+const menuToggle = document.getElementById('menuToggle');
+if (menuToggle) {
+  menuToggle.addEventListener('click', e => {
+    e.stopPropagation();
+    document.body.classList.toggle('sidebar-open');
+  });
+  // Close on backdrop click
+  document.addEventListener('click', e => {
+    if (!document.body.classList.contains('sidebar-open')) return;
+    if (e.target.closest('.sidebar') || e.target.closest('.menu-toggle')) return;
+    document.body.classList.remove('sidebar-open');
+  });
+  // Close after clicking any sidebar nav-link (so user is taken to the section)
+  document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+    link.addEventListener('click', () => document.body.classList.remove('sidebar-open'));
+  });
+  // Close on Esc
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.body.classList.remove('sidebar-open');
+  });
+}
 
 // ─── Approach toggle (A vs B) ───
 const approachBtns = document.querySelectorAll('[data-approach-set]');
