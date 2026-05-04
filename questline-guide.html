@@ -3633,7 +3633,19 @@
       <section id="background">
         <span class="section-label">10 — Component</span>
         <h2><span class="h-num">10</span>Background</h2>
-        <p>The canvas the whole popup is built on. One <code>State=default</code>.</p>
+        <p class="intro">The canvas the whole popup is built on. The themed art (stadium, character, lighting) lives inside its <code>Visuals</code> group.</p>
+
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li>One Component Set, single <code>State=default</code> variant. Layer name <code>background</code>.</li>
+            <li>All theme art goes inside its <code>Visuals</code> group.</li>
+            <li><strong>Description text lives here</strong> — inside <code>background</code>, NOT as a separate component.</li>
+            <li><strong>FREE collectibles</strong> (items the player gets without clicking) also live here, NOT in the quest grid.</li>
+            <li><strong>Never resize the instance in the mockup.</strong> If you need a different size, edit the source component.</li>
+            <li>No fixed pixel size — 366 × 572 is the For The Win example, not a hard rule. What matters is the popup fits in the Mobile + Desktop preview frames.</li>
+          </ul>
+        </div>
 
         <div class="anatomy">
           <div class="anatomy-states">
@@ -3644,22 +3656,22 @@
               <div class="state-name">background · State=default</div>
             </div>
           </div>
-          <div class="anatomy-info">
-            <h3>One Component Set, single variant</h3>
-            <p>Per Michal's guide: <em>"The background is the overall background that is visible as a modal."</em> The whole popup theme art (stadium, character, lighting) is composed inside the <code>Visuals</code> group of this single Component.</p>
-            <p><strong>Inside the background you may put a second "inner" background</strong> — a panel where the collectibles will sit. If you do, that inner background <strong>must be bounded by a stroke</strong>. This is the only nested-bg pattern allowed.</p>
-            <p><strong>Description lives inside the background</strong> — it is NOT a separate component. (See section <a href="#naming" style="color: var(--text);">15 — Layer naming</a> for the description's own rules.)</p>
+        </div>
+
+        <details class="deep">
+          <summary>Spec table &amp; layer structure <span class="deep-tag">reference</span></summary>
+          <div class="deep-body">
             <table class="spec-table">
               <tr><td>Layer name</td><td>background</td></tr>
               <tr><td>Wrapper</td><td>Component Set (dashed rect) ← important</td></tr>
-              <tr><td>Typical canvas</td><td>366 × 572 px (For The Win example) — see sizing rule below</td></tr>
+              <tr><td>Typical canvas</td><td>366 × 572 px (For The Win example) — see sizing rule</td></tr>
               <tr><td>States</td><td>State=default (single)</td></tr>
               <tr><td>Contains description?</td><td>YES — inside background, not separate</td></tr>
               <tr><td>Inner sub-background?</td><td>Optional — must have a stroke if used</td></tr>
               <tr><td>Editable in mockup?</td><td style="color: var(--red);">No — never resize the instance</td></tr>
             </table>
 
-            <h4>Layer structure</h4>
+            <h4 style="margin-top: 18px;">Layer structure</h4>
             <div class="layer-panel dark">
               <div class="l parent">◇ background</div>
               <div class="l indent-1">◆ State=default</div>
@@ -3667,43 +3679,66 @@
               <div class="l indent-3" style="color: #999;">↳ your stadium illustration</div>
               <div class="l indent-3" style="color: #999;">↳ inner background panel (with stroke) — optional</div>
               <div class="l indent-3" style="color: #999;">↳ description (text / group) — if the brief calls for it</div>
-              <div class="l indent-3" style="color: #999;">↳ FREE collectibles — if any (see callout below)</div>
+              <div class="l indent-3" style="color: #999;">↳ FREE collectibles — if any</div>
             </div>
+            <p style="font-size: 13px; margin-top: 12px;">Per Michal's guide: <em>"The background is the overall background that is visible as a modal."</em> The whole popup theme art (stadium, character, lighting) is composed inside the <code>Visuals</code> group of this single Component.</p>
           </div>
-        </div>
+        </details>
 
-        <div class="callout callout-info">
-          <p><strong>"FREE" collectibles live in the background, not as quests.</strong> Some campaigns include a few items the player gets <em>for free</em> — they aren't clickable, they don't have states. Those go directly into the <code>background</code> Component (inside <code>Visuals</code>), not into the quest grid. <em>Mostly applies to Stamp Card variants.</em></p>
-        </div>
+        <details class="deep">
+          <summary>Inner sub-background panel — when and how <span class="deep-tag">optional pattern</span></summary>
+          <div class="deep-body">
+            <p>Inside the background you may put a second "inner" background — a panel where the collectibles will sit. If you do, that inner background <strong>must be bounded by a stroke</strong>. This is the only nested-bg pattern allowed.</p>
+          </div>
+        </details>
 
-        <div class="callout callout-correction">
-          <p><strong>Fix from the in-Figma guide.</strong> The current <code>background</code> there is a plain Component, not a Component Set. Wrap it: select → Add Variant (rhombus) → delete extra variant → leave just <code>State=default</code>. Now it copy-pastes cleanly between projects.</p>
-        </div>
-        <div class="callout callout-warn">
-          <p><strong>Don't grow the bg in the mockup.</strong> If your art needs taller, edit the source component, not the instance. The plugin compares mockup-bg dimensions to source-bg dimensions and fails on mismatch.</p>
-        </div>
-        <div class="callout callout-key">
-          <p><strong>No fixed pixel sizes — popup must fit an average phone.</strong> The 366 × 572 of For The Win is a typical canvas, not a hard rule. You can change the background dimensions (and consequently every component sitting inside it) — what matters is the assembled popup looks right inside the Mobile + Desktop preview frames. That's the entire reason those preview frames exist (see <a href="#preview" style="color: var(--text);">section 20 — Web Preview</a>).</p>
-        </div>
+        <details class="deep">
+          <summary>Description text rules <span class="deep-tag">when the brief calls for it</span></summary>
+          <div class="deep-body">
+            <p>If the brief calls for descriptive copy under the header (e.g. <em>"Five or six missions, five field goals, one Ultimate Reward"</em>), it goes as a text or group layer inside the <code>Visuals</code> of <code>background</code>. Not a separate Component.</p>
+            <ul>
+              <li><strong>Source.</strong> Text comes verbatim from the copywriter, via the brief. Don't rewrite or improvise — copy as written.</li>
+              <li><strong>Length.</strong> 2–4 lines maximum. Anything longer doesn't fit and steals attention from the quests.</li>
+              <li><strong>Alignment.</strong> Always centred horizontally. Same as everything else in the popup.</li>
+              <li><strong>Font size.</strong> 14–18 px is the working range (most often 14, 16, 17). Drop to 13 px only if you have to. 12 px is the absolute minimum and only when nothing else fits — it reads small.</li>
+              <li><strong>Contrast.</strong> Must be very contrasty against the background. Use a hard drop-shadow on the text, OR put a darker pill / panel behind it. Whatever it takes for the text to be instantly legible.</li>
+              <li><strong>Placement.</strong> Either right under the rewards plate, OR near the bottom of the background — wherever it doesn't fight the quests for attention while still being noticed.</li>
+              <li><strong>When to skip it.</strong> Many themes don't have a description at all. If the brief is silent, don't add one.</li>
+            </ul>
+          </div>
+        </details>
 
-        <h3 style="margin-top: 36px;">Description (lives inside this background)</h3>
-        <p>If the brief calls for descriptive copy under the header (e.g. <em>"Five or six missions, five field goals, one Ultimate Reward"</em>), this is where it goes — as a text or group layer inside the <code>Visuals</code> of <code>background</code>. Not a separate Component.</p>
-        <ul>
-          <li><strong>Source.</strong> Text comes verbatim from the copywriter, via the brief. Don't rewrite or improvise — copy as written.</li>
-          <li><strong>Length.</strong> 2–4 lines maximum. Anything longer doesn't fit and steals attention from the quests.</li>
-          <li><strong>Alignment.</strong> Always centred horizontally. Same as everything else in the popup.</li>
-          <li><strong>Font size.</strong> 14–18 px is the working range (most often 14, 16, 17). Drop to 13 px only if you have to. 12 px is the absolute minimum and only when nothing else fits — it reads small.</li>
-          <li><strong>Contrast.</strong> Must be very contrasty against the background. Use a hard drop-shadow on the text, OR put a darker pill / panel behind it. Whatever it takes for the text to be instantly legible.</li>
-          <li><strong>Placement.</strong> Either right under the rewards plate, OR near the bottom of the background — wherever it doesn't fight the quests for attention while still being noticed.</li>
-          <li><strong>When to skip it.</strong> Many themes don't have a description at all. If the brief is silent, don't add one.</li>
-        </ul>
+        <details class="deep">
+          <summary>Fix from the in-Figma guide <span class="deep-tag">correction</span></summary>
+          <div class="deep-body">
+            <p>The current <code>background</code> in Michal's Figma file is a plain Component, not a Component Set. Wrap it: select → Add Variant (rhombus) → delete extra variant → leave just <code>State=default</code>. Now it copy-pastes cleanly between projects.</p>
+          </div>
+        </details>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#naming" data-page="rules">17 Layer naming</a>
+          <a href="#visuals" data-page="rules">18 Visuals rule</a>
+          <a href="#preview" data-page="ship-it">23 Web Preview</a>
+        </div>
       </section>
 
       <!-- ═══ HEADER ═══ -->
       <section id="header">
         <span class="section-label">11 — Component</span>
         <h2><span class="h-num">11</span>Header</h2>
-        <p>The themed banner sticking up above the background. Three states.</p>
+        <p class="intro">The themed banner sticking up above the background. Three runtime states.</p>
+
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li>3 states: <code>active</code> · <code>success</code> · <code>fail</code> — all runtime.</li>
+            <li><code>active</code> — clean themed art (e.g. full-colour FOR THE WIN logo).</li>
+            <li><code>success</code> — same art + a <strong>small amount of confetti</strong>. The confetti must match <code>rewards / claimed</code> so the win moment reads coherent.</li>
+            <li><code>fail</code> — same art, desaturated to greyscale.</li>
+            <li>Size <strong>flexible</strong> — no exact dimensions, whatever fits the theme.</li>
+          </ul>
+        </div>
 
         <div class="anatomy full">
           <div class="anatomy-states">
@@ -3720,14 +3755,12 @@
               <div class="state-name runtime">State=fail</div>
             </div>
           </div>
-          <div class="anatomy-info" style="margin-top: 24px;">
-            <h3>Three runtime states</h3>
+        </div>
+
+        <details class="deep">
+          <summary>Spec table &amp; layer structure <span class="deep-tag">reference</span></summary>
+          <div class="deep-body">
             <p>Per the in-Figma guide: <em>"active = user is still working on quests, success = user completed all quests, fail = user has failed to complete in time."</em></p>
-            <ul>
-              <li><strong>State=active</strong> — clean themed header (e.g. full-colour FOR THE WIN logo + football emoji). Just the artwork, nothing extra.</li>
-              <li><strong>State=success</strong> — same artwork as <code>active</code> + a <em>small amount of confetti</em> over it. The confetti you use here should match the confetti used in <code>rewards / claimed</code> (so the "you won" moment feels coherent across the popup).</li>
-              <li><strong>State=fail</strong> — the same artwork as <code>active</code> but desaturated to greyscale. No colour.</li>
-            </ul>
             <table class="spec-table" style="max-width: 720px;">
               <tr><td>Layer name</td><td>header</td></tr>
               <tr><td>Wrapper</td><td>Component Set (dashed rect)</td></tr>
@@ -3738,7 +3771,7 @@
               <tr><td>FTW example</td><td>315 × 147 px, sticks above bg at y = -59 — illustrative only</td></tr>
             </table>
 
-            <h4>Layer structure</h4>
+            <h4 style="margin-top: 18px;">Layer structure</h4>
             <div class="layer-panel dark">
               <div class="l parent">◇ header</div>
               <div class="l indent-1">◆ State=active</div>
@@ -3749,6 +3782,13 @@
               <div class="l indent-2">▢ Visuals</div>
             </div>
           </div>
+        </details>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#rewards" data-page="components">13 Rewards</a>
+          <a href="#naming" data-page="rules">17 Layer naming</a>
+          <a href="#visuals" data-page="rules">18 Visuals rule</a>
         </div>
       </section>
 
@@ -3905,7 +3945,19 @@
       <section id="rewards">
         <span class="section-label">13 — Component</span>
         <h2><span class="h-num">13</span>Rewards</h2>
-        <p>Four states. The prize tray that sits below the header inside the background.</p>
+        <p class="intro">The prize tray below the header. 4 runtime states. Includes the <code>Wheel</code> instance as the MAX PRIZE icon.</p>
+
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li>4 states: <code>active</code> · <code>unclaimed</code> · <code>claimed</code> · <code>fail</code> — all runtime.</li>
+            <li><code>active</code> and <code>unclaimed</code> are <strong>visually identical</strong> — same artwork, same tiles. Don't redraw them differently.</li>
+            <li><code>claimed</code> = same plate, prize tiles replaced by <strong>"Rewards claimed"</strong> + confetti <em>matching</em> <code>header / success</code>.</li>
+            <li><code>fail</code> = same plate, replaced by <strong>"Time's up"</strong>.</li>
+            <li><strong>All 4 states keep the same physical size</strong> — they swap in-place at runtime.</li>
+            <li>Reward row now has <strong>4 icons</strong>: GC · FREE SC · FS (Free Spins) · MAX PRIZE. The Free Spins line is mandatory on new builds.</li>
+          </ul>
+        </div>
 
         <div class="anatomy full">
           <div class="anatomy-states">
@@ -3926,16 +3978,12 @@
               <div class="state-name runtime">State=fail</div>
             </div>
           </div>
-          <div class="anatomy-info" style="margin-top: 24px;">
-            <h3>Status tray, four runtime states</h3>
-            <p>Per the in-Figma guide: <em>"active = user did not receive the reward (board with prizes), unclaimed = user can claim, claimed = user has claimed (REWARDS CLAIMED with confetti), fail = TIME'S UP."</em> All four are runtime.</p>
-            <p><strong>Equality rules between states:</strong></p>
-            <ul>
-              <li><code>active</code> and <code>unclaimed</code> are <strong>visually identical</strong> — same artwork, same prize tiles. Don't redraw them differently.</li>
-              <li><code>claimed</code> = the same plate, but the prize tiles are replaced by the text <strong>"Rewards claimed"</strong> + confetti. The confetti should be <em>the same confetti you used in</em> <code>header / success</code> — so the win moment reads as one coherent thing.</li>
-              <li><code>fail</code> = the same plate, but with just the text <strong>"Time's up"</strong>.</li>
-              <li><strong>All four states must be the same physical size.</strong> Don't resize <code>claimed</code> or <code>fail</code> smaller — they replace the prize plate in-place at runtime.</li>
-            </ul>
+        </div>
+
+        <details class="deep">
+          <summary>Spec table &amp; what each state is for <span class="deep-tag">reference</span></summary>
+          <div class="deep-body">
+            <p>Per the in-Figma guide: <em>"active = user did not receive the reward (board with prizes), unclaimed = user can claim, claimed = user has claimed (REWARDS CLAIMED with confetti), fail = TIME'S UP."</em></p>
             <table class="spec-table" style="max-width: 720px;">
               <tr><td>Layer name</td><td>rewards</td></tr>
               <tr><td>Wrapper</td><td>Component Set (dashed rect)</td></tr>
@@ -3943,13 +3991,24 @@
               <tr><td>States</td><td>active · unclaimed · claimed · fail</td></tr>
               <tr><td>Where art goes</td><td>inside <code>Visuals</code> group of each state</td></tr>
               <tr><td>Inner reward icons</td><td>GC · FREE SC · FS (Free Spins) · MAX PRIZE</td></tr>
-              <tr><td>MAX PRIZE icon</td><td>instance of <code>Wheel</code> Component Set (next section)</td></tr>
+              <tr><td>MAX PRIZE icon</td><td>instance of <code>Wheel</code> Component Set</td></tr>
             </table>
           </div>
-        </div>
+        </details>
 
-        <div class="callout callout-key">
-          <p><strong>Updated active &amp; unclaimed states now include a <em>Free Spins</em> line.</strong> The reward tray now shows four icons in a row: <code>GC 100,000</code> · <code>FREE SC 50</code> · <code>25 FREE SPINS (SC 0.2 each)</code> · <code>MAX PRIZE SC 5,000</code>. Older themes had three. The fourth (FS) is mandatory in new builds — confirm with the brief if your theme uses it.</p>
+        <details class="deep">
+          <summary>Free Spins line — what changed <span class="deep-tag">recent update</span></summary>
+          <div class="deep-body">
+            <p>The reward tray now shows four icons in a row: <code>GC 100,000</code> · <code>FREE SC 50</code> · <code>25 FREE SPINS (SC 0.2 each)</code> · <code>MAX PRIZE SC 5,000</code>. Older themes had three icons. The fourth (FS) is mandatory in new builds — confirm with the brief whether your theme uses it.</p>
+          </div>
+        </details>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#header" data-page="components">11 Header</a>
+          <a href="#wheel" data-page="components">16 Wheel</a>
+          <a href="#segmentation" data-page="after-export">27 Segmentation</a>
+          <a href="#visuals" data-page="rules">18 Visuals rule</a>
         </div>
       </section>
 
@@ -3957,12 +4016,18 @@
       <section id="wheel">
         <span class="section-label">16 — Component</span>
         <h2><span class="h-num">16</span>Wheel — the Max Prize icon</h2>
-        <p class="intro">
-          The icon next to <strong>MAX PRIZE</strong> inside <code>rewards</code> is its own
-          Component Set with three variants: <strong>Gold</strong>, <strong>Silver</strong>,
-          <strong>Bronze</strong>. The designer swaps variants per segment when assembling
-          reward instances (see Segmentation, section ★).
-        </p>
+        <p class="intro">The icon next to <strong>MAX PRIZE</strong> inside <code>rewards</code> is its own Component Set with three tier variants — Gold, Silver, Bronze.</p>
+
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li>One Component Set <code>Wheel</code> with 3 variants: <strong>Gold</strong> · <strong>Silver</strong> · <strong>Bronze</strong>.</li>
+            <li>Used as a <strong>nested instance</strong> inside <code>rewards</code>/<code>active</code> + <code>rewards</code>/<code>unclaimed</code> Visuals.</li>
+            <li>Designer swaps the variant per segment (VIP / High / Medium / Low) when assembling reward instances.</li>
+            <li>Per-brand artwork — each brand draws its own wheel.</li>
+            <li>Size <strong>flexible</strong> — typical 32 × 32 px, varies 23–40 px per theme to match the other Ultimate Reward icons.</li>
+          </ul>
+        </div>
 
         <div class="anatomy full">
           <div class="anatomy-states">
@@ -3988,11 +4053,18 @@
               <div style="font-size: 11px; color: var(--text-3); margin-top: 4px;">1 SC · entry tier</div>
             </div>
           </div>
+        </div>
 
-          <div class="anatomy-info" style="margin-top: 24px;">
-            <h3>One Component Set, three variants</h3>
-            <p>Lives inside the <code>components</code> frame as <code>Wheel</code>. Each variant is a self-contained 32×32 icon that renders inside the rewards <code>State=active</code> / <code>State=unclaimed</code> Visuals group.</p>
-            <p>Why a separate component? Because the same questline ships to multiple segments (VIP, High, Medium, Low) and each segment may earn a different wheel tier. Having Wheel as its own Component Set means the designer just toggles a variant on the rewards instance — no manual artwork swap.</p>
+        <details class="deep">
+          <summary>Why it's a separate Component <span class="deep-tag">design rationale</span></summary>
+          <div class="deep-body">
+            <p>The same questline ships to multiple segments (VIP, High, Medium, Low) and each segment may earn a different wheel tier. Having <code>Wheel</code> as its own Component Set means the designer just toggles a variant on the rewards instance — no manual artwork swap.</p>
+          </div>
+        </details>
+
+        <details class="deep">
+          <summary>Spec table <span class="deep-tag">reference</span></summary>
+          <div class="deep-body">
             <table class="spec-table" style="max-width: 640px;">
               <tr><td>Layer name</td><td>Wheel</td></tr>
               <tr><td>Wrapper</td><td>Component Set (dashed rect)</td></tr>
@@ -4002,12 +4074,19 @@
               <tr><td>Per-brand?</td><td>YES — each brand draws its own wheel art</td></tr>
             </table>
           </div>
-        </div>
+        </details>
 
         <div class="placeholder">
           <div class="ph-icon">📷</div>
           <div class="ph-title">Drop the actual wheel renders</div>
           <p style="margin: 0; font-size: 12.5px;">Re-export the ZIP after wheel is added. Files appear as <code>wheel_gold.webp</code> / <code>wheel_silver.webp</code> / <code>wheel_bronze.webp</code> in <code>assets/components/</code>.</p>
+        </div>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#rewards" data-page="components">13 Rewards</a>
+          <a href="#segmentation" data-page="after-export">27 Segmentation</a>
+          <a href="#brands" data-page="after-export">28 Four brands</a>
         </div>
       </section>
 
@@ -4015,7 +4094,18 @@
       <section id="button">
         <span class="section-label">14 — Component</span>
         <h2><span class="h-num">14</span>Button</h2>
-        <p>The CTA. Brand-fixed — copied from the UIKit, never theme-customised.</p>
+        <p class="intro">The CTA. Brand-fixed — copied from the UIKit, never theme-customised.</p>
+
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li>Layer name <code>button</code>, wrapped in a Component Set.</li>
+            <li>4 states: <code>default</code> · <code>hover</code> · <code>active</code> · <code>disabled</code>.</li>
+            <li><strong>Color/gradient fills only.</strong> NEVER image fills.</li>
+            <li><strong>Not theme-editable</strong> — copy from the UIKit unchanged.</li>
+            <li>~154 × 58 px (varies slightly per state).</li>
+          </ul>
+        </div>
 
         <div class="anatomy full">
           <div class="anatomy-states">
@@ -4044,8 +4134,11 @@
               <div class="state-name runtime">State=active</div>
             </div>
           </div>
-          <div class="anatomy-info" style="margin-top: 24px;">
-            <h3>Brand asset — keep your hands off</h3>
+        </div>
+
+        <details class="deep">
+          <summary>Spec table <span class="deep-tag">reference</span></summary>
+          <div class="deep-body">
             <p>Per the in-Figma guide: <em>"Is a typical primary or secondary button. Ask a designer to set it up from the UIKit. Does not use image fills. Can have color/gradient fills, solid color stroke, dropshadow effects."</em></p>
             <table class="spec-table" style="max-width: 720px;">
               <tr><td>Layer name</td><td>button</td></tr>
@@ -4056,6 +4149,13 @@
               <tr><td>Theme-editable?</td><td style="color: var(--red);">No — copy from UIKit unchanged</td></tr>
             </table>
           </div>
+        </details>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#timer" data-page="components">15 Timer</a>
+          <a href="#brands" data-page="after-export">28 Four brands</a>
+          <a href="#naming" data-page="rules">17 Layer naming</a>
         </div>
       </section>
 
@@ -4063,7 +4163,17 @@
       <section id="timer">
         <span class="section-label">15 — Component</span>
         <h2><span class="h-num">15</span>Timer</h2>
-        <p>The countdown chip. One default, brand-fixed.</p>
+        <p class="intro">The countdown chip. One default state, brand-fixed.</p>
+
+        <div class="tldr">
+          <span class="tldr-label">Key points</span>
+          <ul>
+            <li>Layer name <code>timer</code>, wrapped in a Component Set with single <code>State=default</code>.</li>
+            <li>96 × 32 px.</li>
+            <li><strong>Color/gradient fills only.</strong> Never image fills.</li>
+            <li><strong>Brand-fixed</strong> — not theme-editable.</li>
+          </ul>
+        </div>
 
         <div class="anatomy">
           <div class="anatomy-states">
@@ -4074,9 +4184,12 @@
               <div class="state-name">timer · State=default</div>
             </div>
           </div>
-          <div class="anatomy-info">
-            <h3>One Component Set, single variant</h3>
-            <p>Per the in-Figma guide: <em>"Represents the timer. Does not use image fills. Can have color/gradient fills, solid color stroke, dropshadow effects."</em> No state variants — single <code>State=default</code> wrapped in a Component Set.</p>
+        </div>
+
+        <details class="deep">
+          <summary>Spec table <span class="deep-tag">reference</span></summary>
+          <div class="deep-body">
+            <p>Per the in-Figma guide: <em>"Represents the timer. Does not use image fills. Can have color/gradient fills, solid color stroke, dropshadow effects."</em></p>
             <table class="spec-table">
               <tr><td>Layer name</td><td>timer</td></tr>
               <tr><td>Wrapper</td><td>Component Set (dashed rect) ← important</td></tr>
@@ -4086,10 +4199,19 @@
               <tr><td>Theme-editable?</td><td style="color: var(--red);">No — brand asset</td></tr>
             </table>
           </div>
-        </div>
+        </details>
 
-        <div class="callout callout-correction">
-          <p><strong>Same fix as background.</strong> The current For The Win guide's timer is a plain Component, not a Component Set. Wrap it: select → Add Variant → delete extra variant → leave just <code>State=default</code>. Travels cleanly between project files.</p>
+        <details class="deep">
+          <summary>Fix from the in-Figma guide <span class="deep-tag">correction</span></summary>
+          <div class="deep-body">
+            <p>Same fix as background. The current For The Win guide's timer is a plain Component, not a Component Set. Wrap it: select → Add Variant → delete extra variant → leave just <code>State=default</code>. Travels cleanly between project files.</p>
+          </div>
+        </details>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#button" data-page="components">14 Button</a>
+          <a href="#brands" data-page="after-export">28 Four brands</a>
         </div>
       </section>
 
