@@ -1068,6 +1068,104 @@
   .landing-checklist-cta-arrow{ color: var(--text-3); font-size: 16px; transition: transform .15s ease; }
   .landing-checklist-cta:hover .landing-checklist-cta-arrow { transform: translateX(3px); color: var(--text); }
 
+  /* ── Notion-style simplify filter — TL;DR + collapsible details ── */
+  /* TL;DR — short summary block at the top of a section */
+  .tldr {
+    background: var(--bg-1);
+    border: 1px solid var(--border-soft);
+    border-left: 3px solid var(--text);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0 22px;
+  }
+  .tldr-label {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--text-3);
+    margin-bottom: 6px;
+  }
+  .tldr ul { margin: 4px 0 0; padding-left: 18px; }
+  .tldr li { font-size: 14px; line-height: 1.55; color: var(--text); margin-bottom: 4px; }
+  .tldr li:last-child { margin-bottom: 0; }
+  .tldr code { font-size: 13px; }
+
+  /* Collapsible "Deep dive" toggles */
+  details.deep {
+    background: var(--bg-1);
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    margin: 12px 0;
+    transition: background .12s ease;
+  }
+  details.deep summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 12px 18px;
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 600;
+    font-size: 13.5px;
+    color: var(--text-2);
+    user-select: none;
+    border-radius: 8px;
+  }
+  details.deep summary::-webkit-details-marker { display: none; }
+  details.deep summary::before {
+    content: '›';
+    font-size: 18px;
+    line-height: 0.9;
+    color: var(--text-3);
+    transition: transform .15s ease;
+    width: 14px;
+    text-align: center;
+  }
+  details.deep[open] > summary::before { transform: rotate(90deg); }
+  details.deep:hover summary { background: var(--bg-2); }
+  details.deep[open] { background: var(--bg-1); border-color: var(--border); }
+  details.deep[open] > summary { border-bottom: 1px solid var(--border-soft); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+  details.deep .deep-body { padding: 16px 22px 18px; }
+  details.deep .deep-body p { margin: 0 0 10px; }
+  details.deep .deep-body p:last-child { margin-bottom: 0; }
+  details.deep .deep-body h4 { margin: 0 0 8px; font-size: 13.5px; font-weight: 700; color: var(--text); }
+  details.deep .deep-tag {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    font-weight: 600;
+  }
+
+  /* See also — small footer-of-section cross-refs */
+  .see-also {
+    margin-top: 28px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-soft);
+    font-size: 12.5px;
+    color: var(--text-3);
+  }
+  .see-also-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--text-3);
+    margin-right: 10px;
+  }
+  .see-also a {
+    display: inline-block;
+    margin-right: 14px;
+    color: var(--text-2);
+    border-bottom: 1px dotted var(--text-3);
+    padding-bottom: 1px;
+  }
+  .see-also a:hover { color: var(--text); border-bottom-color: var(--text); }
+
   /* ── Quick Checklist page ── */
   .checklist-intro {
     display: flex; align-items: center; justify-content: space-between; gap: 18px;
@@ -3659,22 +3757,18 @@
         <span class="section-label">12 — Component</span>
         <h2><span class="h-num">12</span>Quests — the quest matrix</h2>
         <p class="intro">
-          Five quest icons (<code>quest1</code>…<code>quest5</code>), each its own Component
-          Set with four state variants. Each instance carries a unique <code>questKey</code>
-          property. Per Michal's guide, only <strong style="color: var(--green);">active</strong>
-          (player can click on the item) and <strong style="color: var(--green);">completed</strong>
-          (player has collected the item) render at runtime — the other two are required for
-          validation but no longer used.
+          The 5–6 mission icons players click to collect stamps. Each one is a Component
+          Set with 4 state variants and a unique <code>questKey</code>.
         </p>
 
-        <p class="intro" style="font-size: 14px; color: var(--text-3);">
-          <strong>How many quests?</strong> Roughly 4–6, depending on the brief. Five is the
-          common case (this example). Numbering pattern stays the same:
-          <code>quest1</code>, <code>quest2</code>, … with unique <code>questKey</code> per
-          Component Set. <strong>Same item across all quests = 1 design</strong> (just
-          duplicate the Component Set). <strong>Different items = a separate design per
-          quest</strong>, drawn fresh inside each <code>Visuals</code> group.
-        </p>
+        <div class="tldr">
+          <span class="tldr-label">TL;DR</span>
+          <ul>
+            <li>One Component Set per quest. Variants: <code>active, locked, unclaimed, completed</code>.</li>
+            <li>Set <code>questKey</code> per Component Set: <code>quest1</code>, <code>quest2</code>, … <code>questN</code>.</li>
+            <li>Only <code>active</code> and <code>completed</code> show at runtime. <code>locked</code>/<code>unclaimed</code> required for validation only — copy from <code>active</code>/<code>completed</code>, save time.</li>
+          </ul>
+        </div>
 
         <div class="quest-matrix">
           <table>
@@ -3727,41 +3821,82 @@
           </table>
         </div>
 
-        <div class="two-col" style="margin-top: 28px;">
-          <div>
-            <h3>Inside one quest variant</h3>
-            <div class="layer-panel dark">
-              <div class="l parent">◇ quest</div>
-              <div class="l indent-1">◆ State=active</div>
-              <div class="l indent-2">▢ Properties</div>
-              <div class="l indent-3" style="color: #c084fc;">T questKey = "quest1"</div>
-              <div class="l indent-2">▢ Visuals</div>
-              <div class="l indent-3" style="color: #999;">↳ target icon</div>
-              <div class="l indent-1">◆ State=locked</div>
-              <div class="l indent-1">◆ State=unclaimed</div>
-              <div class="l indent-1">◆ State=completed</div>
+        <details class="deep">
+          <summary>How many quests, and how to handle similar vs distinct items <span class="deep-tag">basics · 30 sec</span></summary>
+          <div class="deep-body">
+            <p>Roughly <strong>4–6 per popup</strong>, depending on the brief. Five is the common case; this guide's example uses five. Numbering keeps the same pattern (<code>quest1</code>, <code>quest2</code>, … <code>questN</code>) with one <code>questKey</code> per Component Set.</p>
+            <h4>Same item across all quests</h4>
+            <p>Build <strong>one</strong> Component Set, duplicate it for each position, change only <code>questKey</code> per copy. Single design, repeated.</p>
+            <h4>Different item per quest</h4>
+            <p>Each quest gets its own art inside its own <code>Visuals</code> group. The structure is identical — the artwork inside is what changes per quest.</p>
+          </div>
+        </details>
+
+        <details class="deep">
+          <summary>Building one quest, step by step <span class="deep-tag">workflow · 1 min</span></summary>
+          <div class="deep-body">
+            <div class="two-col" style="margin-top: 0;">
+              <div>
+                <h4>Layer hierarchy</h4>
+                <div class="layer-panel dark">
+                  <div class="l parent">◇ quest</div>
+                  <div class="l indent-1">◆ State=active</div>
+                  <div class="l indent-2">▢ Properties</div>
+                  <div class="l indent-3" style="color: #c084fc;">T questKey = "quest1"</div>
+                  <div class="l indent-2">▢ Visuals</div>
+                  <div class="l indent-3" style="color: #999;">↳ target icon</div>
+                  <div class="l indent-1">◆ State=locked</div>
+                  <div class="l indent-1">◆ State=unclaimed</div>
+                  <div class="l indent-1">◆ State=completed</div>
+                </div>
+                <p style="font-size: 13px; margin-top: 10px;"><code>Properties</code> holds the <code>questKey</code> text layer — never rename it. All four variants of the same quest share the same <code>questKey</code> value.</p>
+              </div>
+              <div>
+                <h4>Duplication pattern</h4>
+                <ol>
+                  <li>Build <code>quest</code> Component Set with all 4 variants (locked, active, unclaimed, completed).</li>
+                  <li>Set <code>questKey = "quest1"</code> in Properties of every variant.</li>
+                  <li><strong>Duplicate the whole Component Set</strong> for each position — don't just rename instances.</li>
+                  <li>Update <code>questKey</code> inside each duplicate (<code>quest2</code>, <code>quest3</code>, …) across all 4 variants.</li>
+                  <li>Swap the art inside <code>Visuals</code> of each.</li>
+                </ol>
+              </div>
             </div>
-            <p style="font-size: 13px; margin-top: 12px;"><code>Properties</code> holds the <code>questKey</code> text layer (never rename it). All variants of the same quest share the same <code>questKey</code> value (<code>quest1</code>, <code>quest2</code>, …).</p>
           </div>
-          <div>
-            <h3>The duplication pattern</h3>
-            <ol>
-              <li>Build <code>quest</code> Component Set with all 4 state variants (locked / active / unclaimed / completed).</li>
-              <li>Set <code>questKey = "quest1"</code> in Properties of every state.</li>
-              <li><strong>Duplicate the entire Component Set</strong> — don't just rename instances. <code>quest1</code> → <code>quest2</code> → <code>quest3</code> → <code>quest4</code> → <code>quest5</code>.</li>
-              <li>Update <code>questKey</code> inside each duplicate (<code>quest2</code>, <code>quest3</code>, …) — across all 4 states of that copy.</li>
-              <li>Swap the art inside <code>Visuals</code> of each.</li>
-            </ol>
+        </details>
+
+        <details class="deep">
+          <summary>The locked &amp; unclaimed shortcut <span class="deep-tag">time-saver</span></summary>
+          <div class="deep-body">
+            <p>Plugin still validates all 4 variants, but only <code>active</code> and <code>completed</code> render at runtime. Pragmatic shortcut from Michal's guide:</p>
+            <ul>
+              <li>Make <code>locked</code> identical to <code>active</code>.</li>
+              <li>Make <code>unclaimed</code> identical to <code>completed</code>.</li>
+            </ul>
+            <p>Same image, different state name. Validation passes, no extra design work.</p>
           </div>
-        </div>
+        </details>
 
-        <div class="callout callout-warn">
-          <p><strong>Locked &amp; unclaimed are required but no longer used at runtime.</strong> Plugin still validates all 4 variants per quest. Pragmatic shortcut, straight from Michal's guide: <strong>prepare <code>locked</code> the same as <code>active</code></strong>, and <strong>prepare <code>unclaimed</code> the same as <code>completed</code></strong>. Same image, different state name. Validation passes, no extra design work.</p>
-        </div>
+        <details class="deep">
+          <summary>Composition rules &amp; visual styles <span class="deep-tag">design</span></summary>
+          <div class="deep-body">
+            <p><strong>Quests can overlap.</strong> Slight, large, or 100 % stacking on top of each other is fine when composition calls for it. Numbering still goes <code>quest1…questN</code> regardless of layout.</p>
+            <h4>Two visual styles the team uses</h4>
+            <ul>
+              <li><strong>Checkmark badge</strong> — colour icon with a green tick once collected.</li>
+              <li><strong>Monochrome → colour</strong> — greyscale until collected, full colour when done.</li>
+            </ul>
+            <p>Either works. Stay consistent within one popup.</p>
+          </div>
+        </details>
 
-        <div class="callout callout-info">
-          <p><strong>Quests can overlap — even fully.</strong> Slight overlap, large overlap, or 100 % stacking on top of each other is allowed when the composition calls for it (some themes group the quests tightly together). Numbering still goes <code>quest1…questN</code> regardless of layout.</p>
-          <p style="margin-top: 8px;"><strong>Two visual styles the team uses for state changes:</strong> (1) <em>checkmark badge</em> — colour icon with a green tick once collected; (2) <em>monochrome → colour</em> — greyscale until collected, full colour when done. Either works. Pick what fits the theme.</p>
+        <p style="font-size: 13px; color: var(--text-3); margin-top: 18px;"><em>FREE collectibles (items the player gets without clicking) live inside the <code>background</code> Component, not in the quest grid.</em></p>
+
+        <div class="see-also">
+          <span class="see-also-label">See also</span>
+          <a href="#component-sets" data-page="anatomy">03 Component Sets</a>
+          <a href="#naming" data-page="rules">17 Layer naming</a>
+          <a href="#visuals" data-page="rules">18 Visuals rule</a>
         </div>
       </section>
 
@@ -5129,7 +5264,8 @@ if (footerVersionLink) {
 
 // Inline watch-strip cards → Videos page (anchored to specific video)
 // Plus active type-cards on the popup-type picker page
-document.querySelectorAll('.watch-strip, a.type-card-active').forEach(link => {
+// Plus See-also cross-refs at bottom of simplified sections
+document.querySelectorAll('.watch-strip, a.type-card-active, .see-also a[data-page]').forEach(link => {
   link.addEventListener('click', e => {
     const target = link.getAttribute('href');
     if (!target || !target.startsWith('#')) return;
