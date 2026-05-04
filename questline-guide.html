@@ -4934,6 +4934,40 @@
 
             <article class="changelog-entry">
               <header class="changelog-head">
+                <span class="changelog-version">v1.3</span>
+                <span class="changelog-date">5 May 2026</span>
+                <span class="changelog-tag tag-minor">Minor</span>
+              </header>
+              <ul>
+                <li>New <strong>Quick Checklist</strong> page — 7 phases / 25 ticks for experienced designers to sanity-check before delivery. Each item links to the deeper section. Progress saved per-browser in <code>localStorage</code>; reset button included.</li>
+                <li>Welcome page gained a purple <strong>“Already know the workflow?”</strong> CTA below the approach picker, jumping straight to the Checklist.</li>
+                <li>New <strong>Popup Types</strong> page (between Welcome and Anatomy): four big cards — Questline + Stamp Card (active), Chain Offer (WIP), Wheel (WIP), Lottery (later). Real cover images for Chain Offer (Boom Boost) and Wheel (Welcome Wheel).</li>
+                <li>Top nav: hover dropdowns on <strong>Popup Types</strong> and <strong>Video Tutorials</strong> for quick jumping. <em>“Type” renamed to “Popup Types”.</em></li>
+                <li>Ship It restructured: <strong>22 ZIP &amp; naming → 23 Web Preview → 24 Google Drive → 25 Monday handoff → 26 Sync</strong>. Drive and Monday split out into their own sections with full content.</li>
+                <li>Section <strong>06 Scan &amp; Validate</strong> renamed to <strong>Validate &amp; Scan</strong>; the “wrong tab → wall of errors” warning + screenshot moved here from Opening it. Validate-first workflow reinforced; <strong>Scan &amp; Export (WebP)</strong> shortcut button explicitly documented.</li>
+                <li><strong>Preview in context</strong> section moved from Ship It to <strong>19</strong> in Rules &amp; Workflow — it's a design-stage check, not post-export.</li>
+                <li>Numbering across the guide synced — sidebar nav-num now matches each content section's <code>h-num</code> exactly.</li>
+                <li><strong>Sidebar scroll-spy</strong> — as you scroll within any page, the active sidebar item updates automatically.</li>
+                <li><strong>Mobile layout pass</strong> — hamburger menu opens the sidebar as a slide-in drawer with backdrop; popup hidden on Welcome to save space; top-nav scrolls horizontally; cards/grids stack 1-column; footer wraps cleanly.</li>
+                <li><strong>Header + footer truly fixed</strong> at top/bottom of viewport — they no longer scroll with the page.</li>
+                <li>Sidebar capped to leave 36 px room for the footer — no overlap when scrolling to the bottom of any page.</li>
+                <li>Approach A and B cards equalised visually — both use the same neutral white border on active state; gold dominance removed.</li>
+                <li>Stamp Card explicitly marked as a Questline sub-variant on the Popup Types page (chip in the heading + description note).</li>
+                <li>Plugin tab-strip screenshot fixed (broken image link → real <code>plugin-strip.png</code>).</li>
+                <li>Type-card images enlarged (200 → 380 px tall) so covers fill the grey area properly.</li>
+                <li>Quest count language updated everywhere: <strong>5–6 quests</strong> (was “5 quests”).</li>
+                <li>"Campaign card" terminology corrected to <strong>"ticket"</strong> on Monday-related sections.</li>
+                <li>Footer copy: <strong>“Internal use only · Made with ❤️ by B2Spin retention team”</strong>; thin single-line layout. <em>Maintained by Kirill Artemov</em> shown on the Changelog page.</li>
+                <li>Hero popup: live <strong>22:36:04</strong> countdown ticking down each second, looping at 0; auto-cycle quests every 0.9 s pauses on hover and when the page is hidden.</li>
+                <li>Original-Figma-guide link in the hero kept; intro copy refined; “Vimble” typo corrected to <em>themable</em>.</li>
+                <li>All inline links across the site now use white text (no blue), no underline; hover brightens via <code>text-shadow</code> faux-bold without layout shift.</li>
+                <li>Image assets pruned and resized — components and plugin folders compressed to half their previous size; figma reference images flagged for local cleanup via <code>optimize-images.sh</code>.</li>
+                <li>One-shot deploy via <code>./deploy.sh "message"</code> after each edit; <code>.gitignore</code> added for backup ZIPs.</li>
+              </ul>
+            </article>
+
+            <article class="changelog-entry">
+              <header class="changelog-head">
                 <span class="changelog-version">v1.2</span>
                 <span class="changelog-date">4 May 2026</span>
                 <span class="changelog-tag tag-minor">Minor</span>
@@ -5003,7 +5037,7 @@
 <footer class="site-footer">
   <div class="site-footer-inner">
     <div class="meta-row">
-      <a href="#changelog" data-page="changelog" class="meta-pill meta-pill-link" title="View changelog">Guide <b>v1.2</b></a>
+      <a href="#changelog" data-page="changelog" class="meta-pill meta-pill-link" title="View changelog">Guide <b>v1.3</b></a>
       <span class="meta-pill">Updated <b>4 May 2026</b></span>
       <span class="meta-pill">Plugin <b>v1.7.6</b></span>
     </div>
