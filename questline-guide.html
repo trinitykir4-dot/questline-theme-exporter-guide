@@ -1029,6 +1029,173 @@
   p { color: var(--text-2); margin-bottom: 14px; max-width: 760px; }
   p.intro { font-size: 17px; line-height: 1.7; color: var(--text-2); max-width: 760px; margin-bottom: 36px; }
 
+  /* Welcome → quick-checklist CTA — sits below the approach picker */
+  .landing-checklist-cta {
+    display: flex; align-items: center; gap: 14px;
+    margin-top: 18px;
+    padding: 10px 16px 10px 14px;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.18), rgba(167, 139, 250, 0.10));
+    border: 1px solid rgba(167, 139, 250, 0.35);
+    border-radius: 10px;
+    color: var(--text);
+    text-decoration: none;
+    transition: all .15s ease;
+  }
+  .landing-checklist-cta:hover {
+    transform: translateY(-1px);
+    border-color: rgba(167, 139, 250, 0.6);
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.28), rgba(167, 139, 250, 0.18));
+    box-shadow: 0 8px 22px -10px rgba(124, 58, 237, 0.6);
+  }
+  body.theme-light .landing-checklist-cta {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.10), rgba(124, 58, 237, 0.04));
+    border-color: rgba(124, 58, 237, 0.30);
+  }
+  .landing-checklist-cta-icon {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    display: grid; place-items: center;
+    background: rgba(167, 139, 250, 0.20);
+    border-radius: 7px;
+    color: #c4b5fd;
+    font-size: 16px;
+    font-weight: 700;
+  }
+  body.theme-light .landing-checklist-cta-icon { color: #6d28d9; background: rgba(124, 58, 237, 0.12); }
+  .landing-checklist-cta-text { display: flex; flex-direction: column; gap: 1px; flex: 1; }
+  .landing-checklist-cta-h    { font-size: 13px; font-weight: 600; color: var(--text); }
+  .landing-checklist-cta-sub  { font-size: 11.5px; color: var(--text-3); }
+  .landing-checklist-cta-arrow{ color: var(--text-3); font-size: 16px; transition: transform .15s ease; }
+  .landing-checklist-cta:hover .landing-checklist-cta-arrow { transform: translateX(3px); color: var(--text); }
+
+  /* ── Quick Checklist page ── */
+  .checklist-intro {
+    display: flex; align-items: center; justify-content: space-between; gap: 18px;
+    margin-bottom: 28px; flex-wrap: wrap;
+  }
+  .checklist-progress {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-3);
+  }
+  .checklist-progress b { color: var(--text); font-weight: 700; }
+  .checklist-reset {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+  .checklist-reset:hover { background: var(--bg-2); color: var(--text); }
+
+  .checklist-phase {
+    margin-bottom: 28px;
+    background: var(--bg-1);
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .checklist-phase-head {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 22px;
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .checklist-phase-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--text-3);
+  }
+  .checklist-phase-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .checklist-phase-count {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--text-3);
+  }
+  .checklist-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 14px;
+    align-items: start;
+    padding: 12px 22px;
+    border-bottom: 1px solid var(--border-soft);
+    transition: background .12s ease;
+  }
+  .checklist-item:last-child { border-bottom: 0; }
+  .checklist-item:hover { background: var(--bg-2); }
+  .checklist-item label {
+    display: flex; align-items: flex-start; gap: 10px;
+    cursor: pointer;
+    line-height: 1.5;
+    font-size: 13.5px;
+    color: var(--text);
+    grid-column: 2;
+  }
+  .checklist-item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--text-3);
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    position: relative;
+    background: transparent;
+    transition: all .15s ease;
+    grid-column: 1;
+  }
+  .checklist-item input[type="checkbox"]:hover { border-color: var(--text-2); }
+  .checklist-item input[type="checkbox"]:checked {
+    background: var(--text);
+    border-color: var(--text);
+  }
+  .checklist-item input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 4px; top: 0px;
+    width: 6px; height: 11px;
+    border: solid var(--bg);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .checklist-item input[type="checkbox"]:checked + label {
+    color: var(--text-3);
+    text-decoration: line-through;
+    text-decoration-color: var(--text-3);
+  }
+  .checklist-item .checklist-link {
+    grid-column: 3;
+    align-self: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-3);
+    text-decoration: none;
+    padding: 4px 8px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    white-space: nowrap;
+    transition: all .15s ease;
+  }
+  .checklist-item .checklist-link:hover { background: var(--bg-2); color: var(--text); border-color: var(--bg-4); }
+
+  @media (max-width: 700px) {
+    .checklist-item { grid-template-columns: auto 1fr; padding: 10px 14px; }
+    .checklist-item .checklist-link { grid-column: 2; margin-top: 4px; align-self: start; font-size: 10.5px; }
+    .checklist-phase-head { padding: 12px 14px; }
+  }
+
   /* ── Popup Type picker — 4 vertical cards ── */
   .type-grid {
     display: grid;
@@ -2091,6 +2258,7 @@
   </a>
   <nav class="top-nav">
     <a href="#getting-started" data-page="getting-started" class="active">Welcome</a>
+    <a href="#checklist" data-page="checklist">Checklist</a>
     <span class="nav-dropdown">
       <a href="#popup-type" data-page="popup-type">Popup Types</a>
       <div class="dropdown-menu">
@@ -2134,6 +2302,7 @@
     <nav>
       <a class="nav-link nav-welcome" href="#getting-started" data-page="getting-started"><span class="nav-num nav-welcome-icon">★</span>Welcome</a>
       <a class="nav-link nav-welcome" href="#popup-type" data-page="popup-type"><span class="nav-num nav-welcome-icon">▦</span>Popup Types</a>
+      <a class="nav-link nav-welcome" href="#checklist" data-page="checklist"><span class="nav-num nav-welcome-icon">☑</span>Checklist</a>
 
       <div class="nav-section">Anatomy</div>
       <a class="nav-link" href="#overview" data-page="anatomy"><span class="nav-num">01</span>Overview &amp; map</a>
@@ -2224,6 +2393,15 @@
                 </button>
               </div>
               <p class="landing-pick-hint">Both approaches ship the same final ZIP. <b>Approach A</b> is the everyday route — fast and safe. <b>Approach B</b> is for designers building a brand-new theme structure from scratch, or rebuilding a broken file.</p>
+
+              <a href="#checklist" data-page="checklist" class="landing-checklist-cta">
+                <span class="landing-checklist-cta-icon">☑</span>
+                <span class="landing-checklist-cta-text">
+                  <span class="landing-checklist-cta-h">Already know the workflow?</span>
+                  <span class="landing-checklist-cta-sub">Open the quick checklist — tick items as you ship.</span>
+                </span>
+                <span class="landing-checklist-cta-arrow">→</span>
+              </a>
             </section>
           </div>
 
@@ -2328,6 +2506,225 @@
         </div>
 
       </div><!-- /page popup-type -->
+
+      <!-- ═══════ PAGE — CHECKLIST ═══════ -->
+      <div class="page" data-page="checklist">
+        <div class="page-title-bar">
+          <span class="page-num">☑ CHECKLIST</span>
+          <h1>Quick checklist — for experienced designers</h1>
+        </div>
+
+        <p class="intro">
+          Sanity-check before delivery. Tick items as you go — your progress is saved
+          locally in this browser. Each item links to the deeper section if you want a
+          refresher. <em>Currently scoped to Questline; Chain Offer / Wheel will get their
+          own checklists when those types are documented.</em>
+        </p>
+
+        <div class="checklist-intro">
+          <div class="checklist-progress" id="checklistProgress">Progress: <b>0</b> / <b>0</b></div>
+          <button class="checklist-reset" id="checklistReset" type="button">Reset all</button>
+        </div>
+
+        <div id="checklistRoot">
+
+          <div class="checklist-phase">
+            <div class="checklist-phase-head">
+              <span class="checklist-phase-num">PHASE 1</span>
+              <span class="checklist-phase-title">Setup &amp; account dance</span>
+              <span class="checklist-phase-count" data-phase-count></span>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-1-1" data-cl>
+              <label for="ck-1-1">Designed the popup in B2Spin Figma account (where the brand UIKit lives)</label>
+              <a href="#plugin-open" class="checklist-link" data-page="the-plugin">→ 05 Opening it</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-1-2" data-cl>
+              <label for="ck-1-2">Switched to <code>figma@patrianna.com</code> account before opening the plugin</label>
+              <a href="#plugin-open" class="checklist-link" data-page="the-plugin">→ 05 Opening it</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-1-3" data-cl>
+              <label for="ck-1-3">Selected the right per-brand testing board (Collectables ML / HM / SB / PF)</label>
+              <a href="#plugin-open" class="checklist-link" data-page="the-plugin">→ 05 Opening it</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-1-4" data-cl>
+              <label for="ck-1-4">Plugin opened, switched to <strong>Questline</strong> tab (not Wheel default)</label>
+              <a href="#plugin-scan" class="checklist-link" data-page="the-plugin">→ 06 Validate &amp; Scan</a>
+            </div>
+          </div>
+
+          <div class="checklist-phase">
+            <div class="checklist-phase-head">
+              <span class="checklist-phase-num">PHASE 2</span>
+              <span class="checklist-phase-title">Build the popup in Figma</span>
+              <span class="checklist-phase-count" data-phase-count></span>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-2-1" data-cl>
+              <label for="ck-2-1">Top-level frame named after the campaign (e.g. <code>Questline: ML SuperBowl</code>)</label>
+              <a href="#naming" class="checklist-link" data-page="rules">→ 17 Layer naming</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-2-2" data-cl>
+              <label for="ck-2-2">All seven components present and named exactly: <code>bg, header, rewards, timer, quests, button</code> (+ optional <code>wheel</code>)</label>
+              <a href="#naming" class="checklist-link" data-page="rules">→ 17 Layer naming</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-2-3" data-cl>
+              <label for="ck-2-3">Component Sets have correct state variants (<code>state=active|success|fail</code> for header, etc.)</label>
+              <a href="#component-sets" class="checklist-link" data-page="anatomy">→ 03 Component Sets</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-2-4" data-cl>
+              <label for="ck-2-4">Each variant contains a <code>Visuals</code> group; all art lives inside it</label>
+              <a href="#visuals" class="checklist-link" data-page="rules">→ 18 Visuals rule</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-2-5" data-cl>
+              <label for="ck-2-5">Quests have unique <code>questKey</code> (<code>quest1</code>…<code>quest5</code> or up to <code>quest6</code>)</label>
+              <a href="#quests" class="checklist-link" data-page="components">→ 12 Quests</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-2-6" data-cl>
+              <label for="ck-2-6">Rewards include the new <em>Free Spins</em> line in active and unclaimed states</label>
+              <a href="#rewards" class="checklist-link" data-page="components">→ 13 Rewards</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-2-7" data-cl>
+              <label for="ck-2-7">Composition: centred, button at bottom (brand-fixed), description 14–18 px (12 absolute min)</label>
+              <a href="#anatomy" class="checklist-link" data-page="anatomy">→ 02 Seven components</a>
+            </div>
+          </div>
+
+          <div class="checklist-phase">
+            <div class="checklist-phase-head">
+              <span class="checklist-phase-num">PHASE 3</span>
+              <span class="checklist-phase-title">Preview in context (design-stage check)</span>
+              <span class="checklist-phase-count" data-phase-count></span>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-3-1" data-cl>
+              <label for="ck-3-1">All four context mockups updated (mobile default + info-open, desktop default + info-open)</label>
+              <a href="#preview-context" class="checklist-link" data-page="rules">→ 19 Preview in context</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-3-2" data-cl>
+              <label for="ck-3-2">Popup looks right against brand chrome — no clipping, dimming feels right</label>
+              <a href="#preview-context" class="checklist-link" data-page="rules">→ 19 Preview in context</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-3-3" data-cl>
+              <label for="ck-3-3">Design lead / art director sign-off received</label>
+              <a href="#preview-context" class="checklist-link" data-page="rules">→ 19 Preview in context</a>
+            </div>
+          </div>
+
+          <div class="checklist-phase">
+            <div class="checklist-phase-head">
+              <span class="checklist-phase-num">PHASE 4</span>
+              <span class="checklist-phase-title">Plugin run — Validate, Scan, Preview</span>
+              <span class="checklist-phase-count" data-phase-count></span>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-4-1" data-cl>
+              <label for="ck-4-1">Validate panel: 6/6 green, no red, no yellow</label>
+              <a href="#plugin-scan" class="checklist-link" data-page="the-plugin">→ 06 Validate &amp; Scan</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-4-2" data-cl>
+              <label for="ck-4-2">Scan completed: "Found 10 elements" (or appropriate count)</label>
+              <a href="#plugin-scan" class="checklist-link" data-page="the-plugin">→ 06 Validate &amp; Scan</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-4-3" data-cl>
+              <label for="ck-4-3">Preview tab: cycled every state — header (3), rewards (4), quests (4), button (4)</label>
+              <a href="#plugin-preview" class="checklist-link" data-page="the-plugin">→ 07 Preview tab</a>
+            </div>
+          </div>
+
+          <div class="checklist-phase">
+            <div class="checklist-phase-head">
+              <span class="checklist-phase-num">PHASE 5</span>
+              <span class="checklist-phase-title">Two-pass export</span>
+              <span class="checklist-phase-count" data-phase-count></span>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-5-1" data-cl>
+              <label for="ck-5-1">Test pass: Render Quality 1×, State Change Delay 250 ms — exported, opened in Web Preview, animation feels right</label>
+              <a href="#workflow" class="checklist-link" data-page="rules">→ 20 Two-pass export</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-5-2" data-cl>
+              <label for="ck-5-2">Final pass: Render Quality 4×, State Change Delay 1000 ms — exported the shipping ZIP</label>
+              <a href="#workflow" class="checklist-link" data-page="rules">→ 20 Two-pass export</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-5-3" data-cl>
+              <label for="ck-5-3">Web Preview re-checked with the FINAL ZIP — every state interactive, animations smooth</label>
+              <a href="#preview" class="checklist-link" data-page="ship-it">→ 23 Web Preview</a>
+            </div>
+          </div>
+
+          <div class="checklist-phase">
+            <div class="checklist-phase-head">
+              <span class="checklist-phase-num">PHASE 6</span>
+              <span class="checklist-phase-title">Ship it — Drive &amp; Monday</span>
+              <span class="checklist-phase-count" data-phase-count></span>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-6-1" data-cl>
+              <label for="ck-6-1">ZIP renamed per convention: <code>ML - Collectible Monetization - Questline - SuperBowl - 02.05.2026.zip</code></label>
+              <a href="#export" class="checklist-link" data-page="ship-it">→ 22 ZIP &amp; naming</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-6-2" data-cl>
+              <label for="ck-6-2">Uploaded to right Drive folder: <code>retention all → 01 Content and Design → CND Design Team → Monetization Assets → [Brand] → Questlines</code></label>
+              <a href="#drive" class="checklist-link" data-page="ship-it">→ 24 Google Drive</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-6-3" data-cl>
+              <label for="ck-6-3">Drive share-link copied. Permission stays <strong>Restricted</strong></label>
+              <a href="#drive" class="checklist-link" data-page="ship-it">→ 24 Google Drive</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-6-4" data-cl>
+              <label for="ck-6-4">Monday.com ticket: link pasted into <strong>Figma Link</strong> column</label>
+              <a href="#monday" class="checklist-link" data-page="ship-it">→ 25 Monday handoff</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-6-5" data-cl>
+              <label for="ck-6-5">Monday.com comment: tagged <strong>@Allison</strong>, <strong>@Natalie</strong>, or <strong>@Noel</strong></label>
+              <a href="#monday" class="checklist-link" data-page="ship-it">→ 25 Monday handoff</a>
+            </div>
+          </div>
+
+          <div class="checklist-phase">
+            <div class="checklist-phase-head">
+              <span class="checklist-phase-num">PHASE 7</span>
+              <span class="checklist-phase-title">Sync project ⇄ test board</span>
+              <span class="checklist-phase-count" data-phase-count></span>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-7-1" data-cl>
+              <label for="ck-7-1">Section (components + mockup + 4 context frames) copied back from Patrianna test page → B2Spin project board</label>
+              <a href="#sync-back" class="checklist-link" data-page="ship-it">→ 26 Sync project ⇄ test</a>
+            </div>
+            <div class="checklist-item">
+              <input type="checkbox" id="ck-7-2" data-cl>
+              <label for="ck-7-2">Both boards now hold identical, polished versions</label>
+              <a href="#sync-back" class="checklist-link" data-page="ship-it">→ 26 Sync project ⇄ test</a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="callout callout-tip" style="margin-top: 28px;">
+          <p><strong>All ticked? You're done.</strong> The popup is themed, validated, exported, shared, and synced. If anything below isn't ticked, click the link next to it for the detail. Tick state is saved per-browser — won't follow you to another machine.</p>
+        </div>
+      </div><!-- /page checklist -->
 
       <!-- ═══════ PAGE 2 — ANATOMY (was inside Getting Started) ═══════ -->
       <div class="page" data-page="anatomy">
@@ -5057,6 +5454,71 @@ if (heroButton) {
   start();
 })();
 
+// ─── Quick checklist — persist + progress counter + deep-link clicks ───
+(() => {
+  const root = document.getElementById('checklistRoot');
+  if (!root) return;
+
+  const STORAGE = 'cte-checklist-v1';
+  const boxes = Array.from(root.querySelectorAll('input[type="checkbox"][data-cl]'));
+
+  // Restore state from localStorage
+  let state = {};
+  try { state = JSON.parse(localStorage.getItem(STORAGE) || '{}'); } catch {}
+  boxes.forEach(b => { if (state[b.id]) b.checked = true; });
+
+  function save() {
+    const o = {};
+    boxes.forEach(b => { if (b.checked) o[b.id] = 1; });
+    try { localStorage.setItem(STORAGE, JSON.stringify(o)); } catch {}
+  }
+
+  // Update progress counter (overall + per-phase)
+  function refreshCounters() {
+    const total = boxes.length;
+    const done  = boxes.filter(b => b.checked).length;
+    const el = document.getElementById('checklistProgress');
+    if (el) el.innerHTML = `Progress: <b>${done}</b> / <b>${total}</b>`;
+    // Per-phase counts
+    document.querySelectorAll('.checklist-phase').forEach(phase => {
+      const items = Array.from(phase.querySelectorAll('input[type="checkbox"][data-cl]'));
+      const d = items.filter(i => i.checked).length;
+      const c = phase.querySelector('[data-phase-count]');
+      if (c) c.textContent = `${d}/${items.length}`;
+    });
+  }
+  refreshCounters();
+
+  // Toggle handler
+  boxes.forEach(b => b.addEventListener('change', () => { save(); refreshCounters(); }));
+
+  // Reset button
+  const resetBtn = document.getElementById('checklistReset');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      if (!confirm('Reset all checkboxes? This clears your local progress.')) return;
+      boxes.forEach(b => { b.checked = false; });
+      save(); refreshCounters();
+    });
+  }
+
+  // Deep-link clicks — go to the linked section in another page
+  root.querySelectorAll('a.checklist-link[data-page]').forEach(link => {
+    link.addEventListener('click', e => {
+      const target = link.getAttribute('href');
+      if (!target || !target.startsWith('#')) return;
+      const id = target.slice(1);
+      const targetEl = document.getElementById(id);
+      if (!targetEl) return;
+      const parentPage = targetEl.closest('.page');
+      if (!parentPage) return;
+      e.preventDefault();
+      history.pushState(null, '', '#' + id);
+      showPage(parentPage.dataset.page, id);
+    });
+  });
+})();
+
 // ─── Auto-cycle quests on hero popup ───
 // Every ~2s, advance ONE quest (round-robin q1→q2→q3→q4→q5→q1…) to the next state.
 // Header / rewards / button stay manual-click-only.
@@ -5196,6 +5658,7 @@ document.querySelectorAll('.mockup-stage img').forEach(img => {
   const STORAGE_KEY = 'cte-search-recent';
   const PAGE_LABELS = {
     'getting-started': 'Welcome',
+    'checklist': 'Checklist',
     'popup-type': 'Popup Type',
     'anatomy': 'Anatomy',
     'the-plugin': 'The Plugin',
